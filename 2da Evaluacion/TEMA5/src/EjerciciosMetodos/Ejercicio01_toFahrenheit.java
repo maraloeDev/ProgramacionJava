@@ -1,8 +1,8 @@
-package Ejercicios;
+package EjerciciosMetodos;
 
 import java.util.Scanner;
 
-public class Ejercicio01_toFahrenheitMetodos {
+public class Ejercicio01_toFahrenheit {
 
     static Scanner scanner = new Scanner(System.in);
 

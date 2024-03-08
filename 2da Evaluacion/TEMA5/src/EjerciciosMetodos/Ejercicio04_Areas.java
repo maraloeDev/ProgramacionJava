@@ -1,8 +1,8 @@
-package Ejercicios;
+package EjerciciosMetodos;
 
 import java.util.Scanner;
 
-public class Ejercicio04_AreasMetodos {
+public class Ejercicio04_Areas {
 
     static Scanner scanner = new Scanner(System.in);
 

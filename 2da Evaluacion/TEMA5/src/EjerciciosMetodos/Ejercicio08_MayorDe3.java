@@ -1,9 +1,9 @@
 /** *****************************************************************************
  * Copyright (c) EDUARDO MARTÍN-SONSECA (maraloeDev)
  ***************************************************************************** */
-package Ejercicios.Metodos;
+package EjerciciosMetodos;
 
-public class Ejercicio08_MayorDe3Metodos {
+public class Ejercicio08_MayorDe3 {
 
     /* static Scanner teclado = new Scanner(System.in);
 
@@ -43,7 +43,7 @@ public class Ejercicio08_MayorDe3Metodos {
 
     public static void main(String[] args) {
 
-        Ejercicio08_MayorDe3Metodos app = new Ejercicio08_MayorDe3Metodos();
+        Ejercicio08_MayorDe3 app = new Ejercicio08_MayorDe3();
         System.out.println(app.elMayor(5, 3, 28));
     }
 }

@@ -1,8 +1,8 @@
-package Ejercicios;
+package EjerciciosMetodos;
 
 import java.util.Scanner;
 
-public class Ejercicio02_DivisorMetodos {
+public class Ejercicio02_Divisor {
 
     static Scanner scanner = new Scanner(System.in);
 

@@ -3,15 +3,15 @@
  * Copyright (C) EDUARDO MARTiN-SONSECA (maraloeDev)
  * ****************************************************************************
  */
-package Ejercicios.Metodos;
+package EjerciciosMetodos;
 
-import static Ejercicios.Metodos.Ejercicio05_PrimoMetodos.teclado;
+import static EjerciciosMetodos.Ejercicio05_Primo.teclado;
 
 /**
  *
  * @author marti
  */
-public class Ejercicio06_PrimosMetodos {
+public class Ejercicio06_Primos {
 
     public static void esPrimo() {
 

@@ -3,7 +3,7 @@
  * Copyright (C) EDUARDO MARTiN-SONSECA (maraloeDev)
  * ****************************************************************************
  */
-package Ejercicios.Metodos;
+package EjerciciosMetodos;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author marti
  */
-public class Ejercicio05_PrimoMetodos {
+public class Ejercicio05_Primo {
 
     static Scanner teclado = new Scanner(System.in);
 

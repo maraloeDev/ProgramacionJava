@@ -1,8 +1,8 @@
 /** *****************************************************************************
  * Copyright (c) EDUARDO MARTÍN-SONSECA (maraloeDev)
  ***************************************************************************** */
-package Ejercicios.Metodos;
+package EjerciciosMetodos;
 
-public class Ejercicio07_EuclidesMetodos {
+public class Ejercicio07_Euclides {
 
 }

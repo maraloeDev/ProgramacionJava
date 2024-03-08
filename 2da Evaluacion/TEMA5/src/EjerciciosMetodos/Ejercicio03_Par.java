@@ -1,9 +1,9 @@
-package Ejercicios;
+package EjerciciosMetodos;
 
 import java.util.Scanner;
 
 
-public class Ejercicio03_ParMetodos {
+public class Ejercicio03_Par {
     
     static Scanner scanner = new Scanner(System.in);
     
