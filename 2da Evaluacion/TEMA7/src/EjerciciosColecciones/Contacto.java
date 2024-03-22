@@ -1,5 +1,4 @@
-package EjerciciosArraysObjetos;
-
+package EjerciciosColecciones;
 
 public class Contacto {
     

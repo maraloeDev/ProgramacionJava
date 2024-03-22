@@ -1,11 +1,11 @@
-package EjerciciosArraysObjetos;
+package EjerciciosColecciones;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
 
-    static Contacto[] listaContactos = new Contacto[5];
+    static ArrayList<Contacto> listaContactos = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -26,6 +26,7 @@ public class App {
                             7. Salir""");
             opcion = scanner.next();
 
+            scanner.nextLine();
             switch (opcion) {
                 case "1":
                     agregarContactos();
@@ -65,10 +66,11 @@ public class App {
     static void subMenu() {
         String opcion;
         do {
-            System.out.println("Introduce una opcion: "
-                    + "1. Buscar por Nombre"
-                    + "2. Buscar por Telefono"
-                    + "3. Volver");
+            System.out.println("""
+                               Introduce una opcion: 
+                               1. Buscar por Nombre
+                               2. Buscar por Telefono
+                               3. Volver""");
             opcion = scanner.next();
             switch (opcion) {
                 case "1":
@@ -91,93 +93,100 @@ public class App {
 
     static void agregarContactos() {
 
-        System.out.print("Introduce el nombre del contacto: ");
+        System.out.print("Introduce un nombre: ");
         String nombre = scanner.next();
 
-        System.out.println("Introduce el telefono del contacto: ");
+        System.out.print("Introduce un telefono: ");
         String telefono = scanner.next();
 
-        for (int i = 0; i < listaContactos.length; i++) {
-            listaContactos[i] = new Contacto(nombre, telefono);
-            System.out.println("Contacto agregado correctamente");
-            break;
-        }
+        Contacto nuevoContacto = new Contacto(nombre, telefono);
+        listaContactos.add(nuevoContacto);
+        System.out.println("Contacto agregado correctamente");
+
     }
 
     static void buscarNombre() {
 
-        for (int i = 0; i < listaContactos.length; i++) {
-            System.out.print("Introduce un nombre a buscar: ");
-            String nombre = scanner.next();
+        System.out.print("Untroduce nombre a buscar: ");
+        String nombreBuscar = scanner.next();
 
-            if (listaContactos[i].getNombre().equalsIgnoreCase(nombre)) {
-                System.out.println(Arrays.toString(listaContactos));
+        for (Contacto c : listaContactos) {
+            if (c.getNombre().equalsIgnoreCase(nombreBuscar)) {
+
+                System.out.println("Contacto encontrado: ");
+                System.out.println(c.getNombre());
+                break;
             }
         }
+
     }
 
     static void buscarTelefono() {
 
-        for (int i = 0; i < listaContactos.length; i++) {
-            System.out.print("Introduce un telefono a buscar: ");
-            String telefono = scanner.next();
+        System.out.print("Untroduce telefono a buscar: ");
+        String telefonoBuscar = scanner.next();
 
-            if (listaContactos[i].getTelefono().equalsIgnoreCase(telefono)) {
-                System.out.println(Arrays.toString(listaContactos));
+        for (Contacto c : listaContactos) {
+            if (c.getTelefono().equalsIgnoreCase(telefonoBuscar)) {
+
+                System.out.println("Contacto encontrado: ");
+                System.out.println(c.getTelefono());
+                break;
             }
         }
+
     }
 
     static void modificarContacto() {
-        System.out.print("Introduce un nombre a modificar: ");
+
+        System.out.print("Introduce nombre a modificar: ");
         String nombre = scanner.next();
 
-        System.out.print("Introduce un telefono a modificar: ");
-        String telefono = scanner.next();
+        for (Contacto c : listaContactos) {
 
-        for (int i = 0; i < listaContactos.length; i++) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
 
-            if (listaContactos[i].getNombre().equalsIgnoreCase(nombre)) {
-
-                System.out.print("Introduce el nuevo nombre: ");
+                System.out.print("Introduce un nombre nuevo: ");
                 String nuevoNombre = scanner.next();
-                listaContactos[i].setNombre(nuevoNombre);
 
-                System.out.print("Introduce el nuevo telefono: ");
-                String NuevoTelefono = scanner.next();
-                listaContactos[i].setTelefono(NuevoTelefono);
+                System.out.print("Introduce un telefono nuevo: ");
+                String nuevoTelefono = scanner.next();
 
+                c.setNombre(nuevoNombre);
+                c.setTelefono(nuevoTelefono);
                 System.out.println("Contacto modificado correctamente");
                 break;
             }
-
         }
-
     }
 
     static void eliminarContacto() {
-        System.out.print("Introduce el nombre del contacto a eliminar: ");
+        System.out.print("Introduce un conttacto a eliminar: ");
         String nombreEliminar = scanner.next();
 
-        for (int i = 0; i < listaContactos.length; i++) {
-            if (listaContactos[i] != null && listaContactos[i].getNombre().equalsIgnoreCase(nombreEliminar)) {
-                listaContactos[i] = null;
-                System.out.println("Contacto eliminado correctamente.");
-                return;
+        for (Contacto c : listaContactos) {
+            if (c.getNombre().equalsIgnoreCase(nombreEliminar)) {
+                listaContactos.remove(c);
+                System.out.println("Contacto eliminado correctamente");
+                break;
             }
         }
 
-        System.out.println("No se encontró ningún contacto con ese nombre.");
     }
 
     static void mostrarListado() {
-        for (Contacto contactos : listaContactos) {
-            System.out.println(contactos);
+
+        for (Contacto c : listaContactos) {
+            if (c != null) {
+                System.out.println(c.toString());
+            }
         }
+
     }
 
     static void vaciarAgenda() {
-        Arrays.fill(listaContactos, null);
+
+        listaContactos.clear();
         System.out.println("Agenda vacia");
     }
 }
