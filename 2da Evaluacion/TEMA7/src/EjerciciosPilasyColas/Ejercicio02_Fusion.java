@@ -1,5 +1,6 @@
 package EjerciciosPilasyColas;
 
+import java.util.Random;
 import java.util.Stack;
 
 public class Ejercicio02_Fusion {
@@ -7,6 +8,8 @@ public class Ejercicio02_Fusion {
     static Stack<Integer> pilaOrdenadaA = new Stack<>();
     static Stack<Integer> pilaOrdenadaD = new Stack<>();
     static Stack<Integer> pilaFusionada = new Stack<>();
+
+    static Random rndm = new Random();
 
     public static void main(String[] args) {
         pilaAscendente();
@@ -16,8 +19,8 @@ public class Ejercicio02_Fusion {
 
     static void pilaAscendente() {
 
-        for (int i = 1; i <= 5; i++) {
-            pilaOrdenadaA.push(i);
+        for (int i = 1; i <= rndm.nextInt(1, 10); i++) {
+            pilaOrdenadaA.push(rndm.nextInt(1, 20));
         }
 
         for (Integer pilaAscendente : pilaOrdenadaA) {
@@ -28,8 +31,8 @@ public class Ejercicio02_Fusion {
 
     static void pilaDescentente() {
 
-        for (int i = 1; i <= 5; i++) {
-            pilaOrdenadaD.push(i);
+        for (int i = 1; i <= rndm.nextInt(1, 10); i++) {
+            pilaOrdenadaD.push(rndm.nextInt(1, 20));
         }
 
         while (!pilaOrdenadaD.isEmpty()) {

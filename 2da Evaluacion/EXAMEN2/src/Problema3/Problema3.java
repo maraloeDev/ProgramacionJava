@@ -4,7 +4,6 @@ public class Problema3 {
 
     public static void main(String[] args) {
         String[] categorias = {"A", "B", "C", "W"};
-
         String[] lista = {"ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"};
         
         for (String categoria : categorias) {

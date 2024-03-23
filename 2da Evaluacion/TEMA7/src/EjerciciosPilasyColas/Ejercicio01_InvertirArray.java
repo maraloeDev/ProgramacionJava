@@ -1,34 +1,31 @@
 package EjerciciosPilasyColas;
 
-import java.util.Random;
 import java.util.Stack;
 
+
 public class Ejercicio01_InvertirArray {
-
-    static Integer[] numeros = new Integer[5];
+    
+    static int[] enteros = new int[5];
     static Stack<Integer> pila = new Stack<>();
-    static Random rndm = new Random();
-
+    
     public static void main(String[] args) {
-
-        for (Integer i = 0; i < numeros.length; i++) {
-
-            numeros[i] = rndm.nextInt(1, 100);
-
-            pila.push(numeros[i]);
+        
+        for (int i = 0; i <= enteros.length-1; i++) {
+        pila.push(i);
         }
-
-        // Muestra la pila
-        for (Integer pilaNumbers : pila) {
-            System.out.println(pilaNumbers);
+        
+        for(Integer numerosOrdenados: pila){
+            System.out.println(numerosOrdenados);
         }
-        System.out.println("----------");
-
-        //Le doy la vuelta
-        while (!pila.isEmpty()) {
+        
+        System.out.println("-----------");
+        
+        //Dar la vuelta
+        
+        while(!pila.isEmpty()){
             System.out.println(pila.pop());
         }
-
     }
-
+    
+    
 }
