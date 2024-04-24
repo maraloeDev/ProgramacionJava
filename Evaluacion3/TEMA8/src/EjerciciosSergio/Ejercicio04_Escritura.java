@@ -23,6 +23,10 @@ public class Ejercicio04_Escritura {
     static BufferedWriter br;
     static int numero;
 
+    public static void main(String[] args) {
+        pideDato();
+    }
+
     static int pideDato() {
         System.out.print("Introduce un numero: ");
         int numero = scanner.nextInt();
@@ -37,7 +41,8 @@ public class Ejercicio04_Escritura {
             br = new BufferedWriter(fr);
 
             File archivo = new File("tabla_multiplicar_" + numero + ".html");
-            if ()
+            
+            
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
