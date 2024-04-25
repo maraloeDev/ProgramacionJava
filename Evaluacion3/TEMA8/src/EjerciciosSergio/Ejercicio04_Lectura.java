@@ -1,14 +1,10 @@
 package EjerciciosSergio;
 
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Ejercicio04_Lectura {
-    
+
     /*
     Escribe un programa Java que genere un archivo HTML con una tabla de multiplicar.
 
@@ -17,7 +13,6 @@ public class Ejercicio04_Lectura {
 
     X siendo el numero del usuario.
      */
-
     static Scanner scanner;
     static int numero;
 
@@ -47,6 +42,7 @@ public class Ejercicio04_Lectura {
         archivo = new File("tabla_multiplicar_" + numero + ".html");
 
         if (!archivo.exists()) {
+            System.out.print("Archivo creado correctamente en: " + archivo.getAbsolutePath());
 
             try {
                 archivo.createNewFile();
@@ -59,20 +55,42 @@ public class Ejercicio04_Lectura {
                 bw = new BufferedWriter(fw);
 
                 bw.write("<!DOCTYPE html>");
+                bw.newLine();
+
                 bw.write("<html lang=\"en\">");
+                bw.newLine();
+
                 bw.write("<head>");
+                bw.newLine();
+
                 bw.write("    <meta charset=\"UTF-8\">");
+                bw.newLine();
+
                 bw.write("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-                bw.write("    <title>Document</title>");
+                bw.newLine();
+
+                bw.write("    <title>Tabla del " + numero + "</title>");
+                bw.newLine();
+
                 bw.write("</head>");
+                bw.newLine();
+
                 bw.write("<body>");
+                bw.newLine();
+
+                bw.write("<h1> Tabla del numero" + numero + "</h1>");
+                bw.newLine();
 
                 for (int i = 0; i <= 10; i++) {
-                    bw.write(i + " * " + numero + " = " + (i * numero));
+                    bw.write(" " + i + " * " + numero + " = " + (i * numero));
+                    bw.write("<br>");
+                    bw.newLine();
                 }
 
                 bw.write("</body>");
+                bw.newLine();
                 bw.write("</html>");
+                bw.newLine();
 
                 bw.close();
             } catch (IOException e) {
@@ -80,8 +98,8 @@ public class Ejercicio04_Lectura {
             }
 
         } else {
+
             System.out.println("El archivo " + archivo.getName() + " ya existe");
         }
     }
-
 }

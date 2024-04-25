@@ -54,7 +54,7 @@ El nombre de los archivos generados seguirá el patrón: carta<nº>.txt, donde
     static void lecturaBinaria() {
         //System.out.println(System.getProperty("user.dir"));
         try {
-            fis = new FileInputStream("./src/TEMA8/Ejercicios/Ejercicio05_Empleados.dat");
+            fis = new FileInputStream("./src/TEMA8/Ejercicios/Ejercicio05_EmpleadosSergio.dat");
             bis = new BufferedInputStream(fis);
             dis = new DataInputStream(bis);
 
@@ -75,7 +75,7 @@ El nombre de los archivos generados seguirá el patrón: carta<nº>.txt, donde
 
     static void lecturaTexto() {
         try {
-            fr = new FileReader("./src/TEMA8/Ejercicios/Ejercicio05_Carta.txt");
+            fr = new FileReader("./src/TEMA8/Ejercicios/Ejercicio05_CartaSergio.txt");
             br = new BufferedReader(fr);
 
             String linea1 = "";
