@@ -8,12 +8,7 @@ public class Ejercicio05_Fincas {
     int habitantes;
     boolean esEscologico;
 
-    public Ejercicio05_Fincas(int numeroIdentificacion, String nombreFinca, double metrosFinca, int habitantes, boolean esEscologico) {
-        this.numeroIdentificacion = numeroIdentificacion;
-        this.nombreFinca = nombreFinca;
-        this.metrosFinca = metrosFinca;
-        this.habitantes = habitantes;
-        this.esEscologico = esEscologico;
+    public Ejercicio05_Fincas() {
     }
 
     public int getNumeroIdentificacion() {

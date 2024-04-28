@@ -41,16 +41,11 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="anadirFinca" min="-2" max="-2" attributes="0"/>
-                              <Component id="borrarFinca" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="verFinca" max="32767" attributes="0"/>
+                      <Component id="verFinca" min="-2" max="-2" attributes="0"/>
+                      <Component id="borrarFinca" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="anadirFinca" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Component id="datosFinca" min="-2" pref="275" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -78,6 +73,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextField" name="datosFinca">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="FINCAS MANOLO"/>
@@ -89,6 +85,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir Finca"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="anadirFincaMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="borrarFinca">
           <Properties>
@@ -99,6 +98,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Fincas"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="verFincaMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -1,20 +1,77 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package EjerciciosSergio;
 
-/**
- *
- * @author Eduardo
- */
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
     /**
      * Creates new form Ejercicio06_Finca
      */
+    //AñadirFinca
+    static FileOutputStream fos;
+    static BufferedOutputStream bos;
+    static DataOutputStream dos;
+    static ArrayList<String> listaFincas = new ArrayList<>();
+    static Ejercicio05_Fincas lasFincas = new Ejercicio05_Fincas();
+
     public Ejercicio05_GUIFincas() {
         initComponents();
+        setFrame();
+    }
+
+    private void setFrame() {
+        setTitle("El Ejercicio");
+        setLocationRelativeTo(null);
+        setSize(500, 300);
+        setResizable(false);
+    }
+
+    void agregarFinca() {
+        // Comprobaciones
+        String nombreFinca = "";
+        do {
+            nombreFinca = JOptionPane.showInputDialog(null, "Introduce un nombre para la finca");
+            if (nombreFinca == null || nombreFinca.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No has introducido nada!!!! \n VUELVE A INTENTARLO!!!!!!!!");
+                return;
+            }
+        } while (nombreFinca.isEmpty());
+
+        File nombreFincas = new File("C:\\Users\\Eduardo\\Desktop\\Fincas\\nombreFincas.tal");
+
+        try {
+
+            fos = new FileOutputStream(nombreFincas, true);
+            bos = new BufferedOutputStream(fos);
+            dos = new DataOutputStream(bos);
+
+            if (!nombreFincas.exists()) {
+                nombreFincas.createNewFile();
+            }
+
+            listaFincas.add(nombreFinca);
+
+            dos.writeInt(listaFincas.size());
+            dos.writeUTF(nombreFinca);
+            
+
+            JOptionPane.showMessageDialog(null, "Finca agregada correctamente en el archivo" + nombreFincas.getCanonicalPath());
+            dos.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void verFincas() {
+
+        datosFinca.setText(String.valueOf(listaFincas));
     }
 
     /**
@@ -34,13 +91,24 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        datosFinca.setEditable(false);
         datosFinca.setBorder(javax.swing.BorderFactory.createTitledBorder("FINCAS MANOLO"));
 
         anadirFinca.setText("Añadir Finca");
+        anadirFinca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                anadirFincaMouseClicked(evt);
+            }
+        });
 
         borrarFinca.setText("Borrar Finca");
 
         verFinca.setText("Ver Fincas");
+        verFinca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verFincaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelNormalLayout = new javax.swing.GroupLayout(PanelNormal);
         PanelNormal.setLayout(PanelNormalLayout);
@@ -49,13 +117,10 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelNormalLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(PanelNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelNormalLayout.createSequentialGroup()
-                        .addGroup(PanelNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(anadirFinca)
-                            .addComponent(borrarFinca))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(verFinca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(verFinca)
+                    .addComponent(borrarFinca)
+                    .addComponent(anadirFinca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(datosFinca, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -89,6 +154,14 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void anadirFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anadirFincaMouseClicked
+        agregarFinca();
+    }//GEN-LAST:event_anadirFincaMouseClicked
+
+    private void verFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verFincaMouseClicked
+        verFincas();
+    }//GEN-LAST:event_verFincaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -103,16 +176,24 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio05_GUIFincas.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -120,10 +201,8 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ejercicio05_GUIFincas().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Ejercicio05_GUIFincas().setVisible(true);
         });
     }
 
