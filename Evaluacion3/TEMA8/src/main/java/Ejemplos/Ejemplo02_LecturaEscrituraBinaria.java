@@ -21,7 +21,7 @@ import javax.swing.filechooser.FileSystemView;
  *
  * @author maraloed
  */
-public class LecturaEscrituraBinaria extends javax.swing.JFrame {
+public class Ejemplo02_LecturaEscrituraBinaria extends javax.swing.JFrame {
 
     /**
      * Creates new form LecturaEscrituraBinaria
@@ -33,7 +33,7 @@ public class LecturaEscrituraBinaria extends javax.swing.JFrame {
     static DataOutputStream dos = null;
     static Random rndm = new Random();
 
-    public LecturaEscrituraBinaria() {
+    public Ejemplo02_LecturaEscrituraBinaria() {
         initComponents();
         setFrame();
     }
@@ -141,12 +141,12 @@ public class LecturaEscrituraBinaria extends javax.swing.JFrame {
             BufferedOutputStream br = new BufferedOutputStream(fos);
             DataOutputStream dos = new DataOutputStream(fos);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 fos.close();
             } catch (IOException ex) {
-                Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -156,7 +156,7 @@ public class LecturaEscrituraBinaria extends javax.swing.JFrame {
             try {
                 dos.writeDouble(aleatorio);
             } catch (IOException ex) {
-                Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         jTextArea1.setText(String.valueOf(aleatorio));
@@ -182,20 +182,21 @@ public class LecturaEscrituraBinaria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejemplo02_LecturaEscrituraBinaria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LecturaEscrituraBinaria().setVisible(true);
+                new Ejemplo02_LecturaEscrituraBinaria().setVisible(true);
             }
         });
     }

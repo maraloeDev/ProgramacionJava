@@ -3,7 +3,7 @@ package EjerciciosSergio;
 import java.io.*;
 import java.util.Scanner;
 
-public class Ejercicio04_Lectura {
+public class Ejercicio04_Escritura {
 
     /*
     Escribe un programa Java que genere un archivo HTML con una tabla de multiplicar.
@@ -78,7 +78,7 @@ public class Ejercicio04_Lectura {
                 bw.write("<body>");
                 bw.newLine();
 
-                bw.write("<h1> Tabla del numero" + numero + "</h1>");
+                bw.write("<h1> Tabla del numero " + numero + "</h1>");
                 bw.newLine();
 
                 for (int i = 0; i <= 10; i++) {

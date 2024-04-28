@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 
-public class EscrituraTxt {
+public class Ejemplo01_EscrituraTxt {
     
     static JFileChooser jfc;
     static FileWriter fw;
@@ -39,7 +39,7 @@ public class EscrituraTxt {
                 bw.close();
                 
             } catch (IOException ex) {
-                Logger.getLogger(EscrituraTxt.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo01_EscrituraTxt.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             

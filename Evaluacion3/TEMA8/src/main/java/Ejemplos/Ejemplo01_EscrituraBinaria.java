@@ -16,7 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 
-public class EscrituraBinaria {
+public class Ejemplo01_EscrituraBinaria {
     
     static JFileChooser jfc;
     static FileOutputStream fos;
@@ -45,11 +45,11 @@ public class EscrituraBinaria {
                     
                     dos.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(EscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Ejemplo01_EscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(EscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo01_EscrituraBinaria.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         

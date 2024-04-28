@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
-public class LecturaBinaria {
+public class Ejemplo02_LecturaBinaria {
 
     static JFileChooser jfc;
     static FileInputStream fis;
@@ -41,9 +41,9 @@ public class LecturaBinaria {
 
                 dis.close();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(LecturaBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo02_LecturaBinaria.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(LecturaBinaria.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo02_LecturaBinaria.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

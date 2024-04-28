@@ -11,7 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 
 
-public class LecturaTxt {
+public class Ejemplo01_LecturaTxt {
     
     static JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
     static FileReader fr;
@@ -36,11 +36,11 @@ public class LecturaTxt {
                         System.out.println(linea);
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(LecturaTxt.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Ejemplo01_LecturaTxt.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(LecturaTxt.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Ejemplo01_LecturaTxt.class.getName()).log(Level.SEVERE, null, ex);
             }
        }
     }
