@@ -15,7 +15,9 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
     static FileOutputStream fos;
     static BufferedOutputStream bos;
     static DataOutputStream dos;
-    static ArrayList<String> listaFincas = new ArrayList<>();
+    static ArrayList<Ejercicio05_Fincas> listaFincas = new ArrayList<>();
+    static File archivoFincas;
+    static Ejercicio05_Fincas datosFincas = new Ejercicio05_Fincas();
 
     public Ejercicio05_GUIFincas() {
         initComponents();
@@ -29,7 +31,71 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         setResizable(false);
     }
 
-   
+    void agregarFinca() {
+
+        String nombreFinca = "";
+
+        do {
+
+            nombreFinca = JOptionPane.showInputDialog(null,
+                    "Introduce un nombre para ña finca");
+
+            if (nombreFinca == null || nombreFinca.isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "No has introducido nada, vuelve a intentarlo");
+                return;
+            }
+        } while (nombreFinca.isEmpty());
+
+        archivoFincas = new File("C:\\Users\\maraloed\\Desktop\\Fincas\\fincas.pal");
+
+        if (!archivoFincas.exists()) {
+            try {
+                archivoFincas.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+            listaFincas.add());
+
+            fos = new FileOutputStream(archivoFincas, true);
+            bos = new BufferedOutputStream(fos);
+            dos = new DataOutputStream(fos);
+
+            dos.writeUTF(String.valueOf(listaFincas));
+
+            dos.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void borrarFinca() {
+
+        String idExistente =JOptionPane.showInputDialog(null,
+                         "Introduce un id");
+        
+        int datos = datosFincas.getNumeroIdentificacion();
+        
+        datos=Integer.parseInt(idExistente);
+            
+            for(Ejercicio05_Fincas ids : listaFincas){
+                
+                if (ids.equals(idExistente)){
+                    
+                }
+            }
+            
+        
+    }
+
+    void verFincas() {
+        datosFinca.setText(String.valueOf(datosFincas.toString()));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,13 +115,33 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         datosFinca.setEditable(false);
+        datosFinca.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        datosFinca.setToolTipText("");
+        datosFinca.setAlignmentX(0.0F);
+        datosFinca.setAlignmentY(0.0F);
         datosFinca.setBorder(javax.swing.BorderFactory.createTitledBorder("FINCAS MANOLO"));
+        datosFinca.setPreferredSize(new java.awt.Dimension(0, 0));
 
         anadirFinca.setText("Añadir Finca");
+        anadirFinca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                anadirFincaMouseClicked(evt);
+            }
+        });
 
         borrarFinca.setText("Borrar Finca");
+        borrarFinca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrarFincaMouseClicked(evt);
+            }
+        });
 
         verFinca.setText("Ver Fincas");
+        verFinca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verFincaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelNormalLayout = new javax.swing.GroupLayout(PanelNormal);
         PanelNormal.setLayout(PanelNormalLayout);
@@ -74,10 +160,6 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         PanelNormalLayout.setVerticalGroup(
             PanelNormalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelNormalLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(datosFinca)
-                .addContainerGap())
-            .addGroup(PanelNormalLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(anadirFinca)
                 .addGap(33, 33, 33)
@@ -85,6 +167,10 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(verFinca)
                 .addContainerGap(110, Short.MAX_VALUE))
+            .addGroup(PanelNormalLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(datosFinca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,6 +186,18 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void anadirFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anadirFincaMouseClicked
+        agregarFinca();
+    }//GEN-LAST:event_anadirFincaMouseClicked
+
+    private void borrarFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrarFincaMouseClicked
+        borrarFinca();
+    }//GEN-LAST:event_borrarFincaMouseClicked
+
+    private void verFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verFincaMouseClicked
+        verFincas();
+    }//GEN-LAST:event_verFincaMouseClicked
 
     /**
      * @param args the command line arguments
