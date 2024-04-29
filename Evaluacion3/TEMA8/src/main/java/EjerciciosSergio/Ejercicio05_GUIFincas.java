@@ -16,7 +16,6 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
     static BufferedOutputStream bos;
     static DataOutputStream dos;
     static ArrayList<String> listaFincas = new ArrayList<>();
-    static Ejercicio05_Fincas lasFincas = new Ejercicio05_Fincas();
 
     public Ejercicio05_GUIFincas() {
         initComponents();
@@ -30,49 +29,7 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         setResizable(false);
     }
 
-    void agregarFinca() {
-        // Comprobaciones
-        String nombreFinca = "";
-        do {
-            nombreFinca = JOptionPane.showInputDialog(null, "Introduce un nombre para la finca");
-            if (nombreFinca == null || nombreFinca.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No has introducido nada!!!! \n VUELVE A INTENTARLO!!!!!!!!");
-                return;
-            }
-        } while (nombreFinca.isEmpty());
-
-        File nombreFincas = new File("C:\\Users\\Eduardo\\Desktop\\Fincas\\nombreFincas.tal");
-
-        try {
-
-            fos = new FileOutputStream(nombreFincas, true);
-            bos = new BufferedOutputStream(fos);
-            dos = new DataOutputStream(bos);
-
-            if (!nombreFincas.exists()) {
-                nombreFincas.createNewFile();
-            }
-
-            listaFincas.add(nombreFinca);
-
-            dos.writeInt(listaFincas.size());
-            dos.writeUTF(nombreFinca);
-            
-
-            JOptionPane.showMessageDialog(null, "Finca agregada correctamente en el archivo" + nombreFincas.getCanonicalPath());
-            dos.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Ejercicio05_GUIFincas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    void verFincas() {
-
-        datosFinca.setText(String.valueOf(listaFincas));
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -95,20 +52,10 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
         datosFinca.setBorder(javax.swing.BorderFactory.createTitledBorder("FINCAS MANOLO"));
 
         anadirFinca.setText("Añadir Finca");
-        anadirFinca.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                anadirFincaMouseClicked(evt);
-            }
-        });
 
         borrarFinca.setText("Borrar Finca");
 
         verFinca.setText("Ver Fincas");
-        verFinca.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                verFincaMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout PanelNormalLayout = new javax.swing.GroupLayout(PanelNormal);
         PanelNormal.setLayout(PanelNormalLayout);
@@ -153,14 +100,6 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void anadirFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anadirFincaMouseClicked
-        agregarFinca();
-    }//GEN-LAST:event_anadirFincaMouseClicked
-
-    private void verFincaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verFincaMouseClicked
-        verFincas();
-    }//GEN-LAST:event_verFincaMouseClicked
 
     /**
      * @param args the command line arguments

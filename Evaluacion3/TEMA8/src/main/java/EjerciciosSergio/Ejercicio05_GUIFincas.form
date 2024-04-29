@@ -85,9 +85,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir Finca"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="anadirFincaMouseClicked"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="borrarFinca">
           <Properties>
@@ -98,9 +95,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Ver Fincas"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="verFincaMouseClicked"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
