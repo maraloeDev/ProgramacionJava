@@ -1,7 +1,7 @@
 package EjerciciosSergio;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -11,13 +11,19 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
     /**
      * Creates new form Ejercicio06_Finca
      */
+    //Cosas aleatorias
+    static Random rndm = new Random();
+    static int contadorIds = 1;
     //AñadirFinca
     static FileOutputStream fos;
     static BufferedOutputStream bos;
     static DataOutputStream dos;
+
+    //DatosFincas
+    static String nombreFinca = "";
     static ArrayList<Ejercicio05_Fincas> listaFincas = new ArrayList<>();
     static File archivoFincas;
-    static Ejercicio05_Fincas datosFincas = new Ejercicio05_Fincas();
+    static Ejercicio05_Fincas datosFincas;
 
     public Ejercicio05_GUIFincas() {
         initComponents();
@@ -33,12 +39,9 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
     void agregarFinca() {
 
-        String nombreFinca = "";
-
         do {
-
             nombreFinca = JOptionPane.showInputDialog(null,
-                    "Introduce un nombre para ña finca");
+                    "Introduce un nombre para la finca");
 
             if (nombreFinca == null || nombreFinca.isEmpty()) {
                 JOptionPane.showMessageDialog(null,
@@ -47,7 +50,7 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
             }
         } while (nombreFinca.isEmpty());
 
-        archivoFincas = new File("C:\\Users\\maraloed\\Desktop\\Fincas\\fincas.pal");
+        archivoFincas = new File("C:\\Users\\Eduardo\\Desktop\\Fincas\\fincas.pal");
 
         if (!archivoFincas.exists()) {
             try {
@@ -57,13 +60,25 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
             }
         }
         try {
-            listaFincas.add());
+
+            datosFincas = new Ejercicio05_Fincas(
+                    contadorIds++,
+                    nombreFinca,
+                    rndm.nextDouble(0.0, 2000.0),
+                    rndm.nextInt(0, 400),
+                    rndm.nextBoolean());
+
+            listaFincas.add(datosFincas);
 
             fos = new FileOutputStream(archivoFincas, true);
             bos = new BufferedOutputStream(fos);
             dos = new DataOutputStream(fos);
-
-            dos.writeUTF(String.valueOf(listaFincas));
+            
+            dos.writeInt(datosFincas.getNumeroIdentificacion());
+            dos.writeUTF(datosFincas.getNombreFinca());
+            dos.writeDouble(datosFincas.getMetrosFinca());
+            dos.writeInt(datosFincas.getHabitantes());
+            dos.writeBoolean(datosFincas.isEsEscologico());
 
             dos.close();
         } catch (FileNotFoundException ex) {
@@ -76,25 +91,27 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
 
     void borrarFinca() {
 
-        String idExistente =JOptionPane.showInputDialog(null,
-                         "Introduce un id");
-        
-        int datos = datosFincas.getNumeroIdentificacion();
-        
-        datos=Integer.parseInt(idExistente);
-            
-            for(Ejercicio05_Fincas ids : listaFincas){
-                
-                if (ids.equals(idExistente)){
-                    
-                }
+        int idExistente = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id"));
+
+        for (int i = 0; i < listaFincas.size(); i++) {
+            Ejercicio05_Fincas finca = listaFincas.get(i);
+            if (finca.getNumeroIdentificacion() == idExistente) {
+                listaFincas.remove(i);
+                JOptionPane.showMessageDialog(null, "Finca eliminada");
+                break;
             }
-            
-        
+        }
     }
 
     void verFincas() {
-        datosFinca.setText(String.valueOf(datosFincas.toString()));
+        String fincasText = "";
+        for (Ejercicio05_Fincas verFinca : listaFincas) {
+            if (verFinca != null) {
+                fincasText += verFinca.toString() + "\n";
+            }
+        }
+        JOptionPane.showMessageDialog(null, fincasText);
+
     }
 
     /**

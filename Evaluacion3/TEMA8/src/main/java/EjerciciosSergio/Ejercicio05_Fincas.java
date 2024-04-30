@@ -1,6 +1,8 @@
 package EjerciciosSergio;
 
 public class Ejercicio05_Fincas {
+    
+    
 
     int numeroIdentificacion;
     String nombreFinca;
@@ -8,8 +10,15 @@ public class Ejercicio05_Fincas {
     int habitantes;
     boolean esEscologico;
 
-    public Ejercicio05_Fincas() {
+    public Ejercicio05_Fincas(int numeroIdentificacion, String nombreFinca, double metrosFinca, int habitantes, boolean esEscologico) {
+        this.numeroIdentificacion = numeroIdentificacion;
+        this.nombreFinca = nombreFinca;
+        this.metrosFinca = metrosFinca;
+        this.habitantes = habitantes;
+        this.esEscologico = esEscologico;
     }
+
+    
 
     public int getNumeroIdentificacion() {
         return numeroIdentificacion;
