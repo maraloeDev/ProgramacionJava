@@ -1,4 +1,4 @@
-package Ejemplos;
+    package Ejemplos;
 
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvCustomBindByName;
@@ -21,8 +21,7 @@ public class Ejemplo03_LecturaCSV {
     static File archivo = new File("C:\\Users\\Eduardo\\Desktop\\ProgramacionJava\\Evaluacion3\\TEMA8\\src\\main\\java\\Ejemplos\\download.csv");
     
     public static void main(String[] args) {
-        elFacilito();
-        
+     //   elFacilito();
         elComplicado();
     }
     
@@ -38,7 +37,7 @@ public class Ejemplo03_LecturaCSV {
                 
                 for (int i = 0; i < cosas.length; i++) {
                     
-                    System.out.print(cosas[i].trim() + "\t\t");
+                    System.out.print(cosas[i] + "\t\t");
                     
                 }
                 System.out.println("");
