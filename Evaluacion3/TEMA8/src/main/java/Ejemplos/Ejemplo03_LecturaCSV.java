@@ -21,8 +21,8 @@ public class Ejemplo03_LecturaCSV {
     static File archivo = new File("C:\\Users\\Eduardo\\Desktop\\ProgramacionJava\\Evaluacion3\\TEMA8\\src\\main\\java\\Ejemplos\\download.csv");
     
     public static void main(String[] args) {
-     //   elFacilito();
-        elComplicado();
+     elFacilito();
+      //  elComplicado();
     }
     
     static void elFacilito() {
