@@ -1,20 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package EjerciciosSergio;
 
-/**
- *
- * @author Eduardo
- */
+import java.io.File;
+
+
 public class Ejercicio06_Golf extends javax.swing.JFrame {
 
     /**
      * Creates new form Ejercicio06_Golf
      */
+    
+    static File archivoPrincipal = new File(pathname)
     public Ejercicio06_Golf() {
         initComponents();
+        setFrame();
+    }
+    
+private void setFrame(){
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -39,6 +42,8 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         verPartidas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setEnabled(false);
+        setResizable(false);
 
         datosJugadores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(datosJugadores);
@@ -119,10 +124,8 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ejercicio06_Golf().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Ejercicio06_Golf().setVisible(true);
         });
     }
 
