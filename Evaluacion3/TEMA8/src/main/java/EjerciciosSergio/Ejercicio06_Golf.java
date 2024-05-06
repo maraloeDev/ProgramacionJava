@@ -1,23 +1,33 @@
 package EjerciciosSergio;
 
 import java.io.File;
-
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Ejercicio06_Golf extends javax.swing.JFrame {
 
     /**
      * Creates new form Ejercicio06_Golf
      */
-    
-    static File archivoPrincipal = new File(pathname)
+    //Archivo
+    static File archivoPrincipal = new File("C:\\Users\\Eduardo\\Desktop\\archivoPuntuaciones.bin");
+    static ArrayList<String> listaJugadores = new ArrayList<>();
+
     public Ejercicio06_Golf() {
         initComponents();
         setFrame();
     }
-    
-private void setFrame(){
+
+    private void setFrame() {
         setLocationRelativeTo(null);
         setResizable(false);
+    }
+
+    void agregarPuntuacion() {
+        
+        int id =Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+        
+
     }
 
     /**
@@ -32,14 +42,11 @@ private void setFrame(){
         jScrollPane1 = new javax.swing.JScrollPane();
         datosJugadores = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        verArchivo = new javax.swing.JMenuItem();
-        modificarArchivo = new javax.swing.JMenuItem();
-        exportarPartida = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         agregarPuntuacion = new javax.swing.JMenuItem();
         calcularResultado = new javax.swing.JMenuItem();
         verPartidas = new javax.swing.JMenuItem();
+        exportarPartida = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setEnabled(false);
@@ -48,22 +55,14 @@ private void setFrame(){
         datosJugadores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(datosJugadores);
 
-        jMenu2.setText("Archivo");
-
-        verArchivo.setText("Ver");
-        jMenu2.add(verArchivo);
-
-        modificarArchivo.setText("Modificar");
-        jMenu2.add(modificarArchivo);
-
-        exportarPartida.setText("Exportar una partida");
-        jMenu2.add(exportarPartida);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("Opciones");
 
         agregarPuntuacion.setText("Agregar una nueva puntuación");
+        agregarPuntuacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarPuntuacionMouseClicked(evt);
+            }
+        });
         jMenu3.add(agregarPuntuacion);
 
         calcularResultado.setText("Calcular resultado de una partida");
@@ -71,6 +70,9 @@ private void setFrame(){
 
         verPartidas.setText("Ver partidas guardadas");
         jMenu3.add(verPartidas);
+
+        exportarPartida.setText("Exportar partida");
+        jMenu3.add(exportarPartida);
 
         jMenuBar1.add(jMenu3);
 
@@ -95,6 +97,10 @@ private void setFrame(){
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void agregarPuntuacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarPuntuacionMouseClicked
+        agregarPuntuacion();
+    }//GEN-LAST:event_agregarPuntuacionMouseClicked
 
     /**
      * @param args the command line arguments
@@ -134,12 +140,9 @@ private void setFrame(){
     private javax.swing.JMenuItem calcularResultado;
     private javax.swing.JList<String> datosJugadores;
     private javax.swing.JMenuItem exportarPartida;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenuItem modificarArchivo;
-    private javax.swing.JMenuItem verArchivo;
     private javax.swing.JMenuItem verPartidas;
     // End of variables declaration//GEN-END:variables
 }

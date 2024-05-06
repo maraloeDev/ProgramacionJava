@@ -4,28 +4,6 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Archivo"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="verArchivo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ver"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="modificarArchivo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Modificar"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="exportarPartida">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Exportar una partida"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
             <Property name="text" type="java.lang.String" value="Opciones"/>
@@ -35,6 +13,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar una nueva puntuaci&#xf3;n"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="agregarPuntuacionMouseClicked"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="calcularResultado">
               <Properties>
@@ -44,6 +25,11 @@
             <MenuItem class="javax.swing.JMenuItem" name="verPartidas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver partidas guardadas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="exportarPartida">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Exportar partida"/>
               </Properties>
             </MenuItem>
           </SubComponents>
