@@ -11,7 +11,7 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
      */
     //Archivo
     static File archivoPrincipal = new File("C:\\Users\\Eduardo\\Desktop\\archivoPuntuaciones.bin");
-    static ArrayList<String> listaJugadores = new ArrayList<>();
+    static ArrayList<Ejercicio07_ClaseGolf> listaJugadores = new ArrayList<>();
 
     public Ejercicio06_Golf() {
         initComponents();
@@ -24,10 +24,14 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     }
 
     void agregarPuntuacion() {
-        
-        int id =Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
-        
 
+        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+        String nombreJugador = JOptionPane.showInputDialog(null, "Introduce un nombre: ");
+        int nGolpes = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un numero de golpes: "));
+        int nHoyos = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un numero de hoyos jugados: "));
+
+        Ejercicio07_ClaseGolf golf = new Ejercicio07_ClaseGolf(id, nombreJugador, nGolpes, nHoyos);
+        listaJugadores.add(golf);
     }
 
     /**
