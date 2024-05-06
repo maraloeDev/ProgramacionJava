@@ -11,7 +11,8 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
      */
     //Archivo
     static File archivoPrincipal = new File("C:\\Users\\Eduardo\\Desktop\\archivoPuntuaciones.bin");
-    static ArrayList<Ejercicio07_ClaseGolf> listaJugadores = new ArrayList<>();
+    static ArrayList<Ejercicio06_ClaseGolf> listaJugadores = new ArrayList<>();
+    static Ejercicio06_ClaseGolf golf;
 
     public Ejercicio06_Golf() {
         initComponents();
@@ -25,13 +26,19 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
 
     void agregarPuntuacion() {
 
-        int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+        
         String nombreJugador = JOptionPane.showInputDialog(null, "Introduce un nombre: ");
         int nGolpes = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un numero de golpes: "));
         int nHoyos = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un numero de hoyos jugados: "));
 
-        Ejercicio07_ClaseGolf golf = new Ejercicio07_ClaseGolf(id, nombreJugador, nGolpes, nHoyos);
+        golf= new Ejercicio06_ClaseGolf(nombreJugador, nGolpes, nHoyos);
         listaJugadores.add(golf);
+        
+        JOptionPane.showMessageDialog(null, "Jugador creado correctamente");
+    }
+    
+    void partidasGuardadas(){
+        
     }
 
     /**
@@ -70,6 +77,11 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         jMenu3.add(agregarPuntuacion);
 
         calcularResultado.setText("Calcular resultado de una partida");
+        calcularResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcularResultadoMouseClicked(evt);
+            }
+        });
         jMenu3.add(calcularResultado);
 
         verPartidas.setText("Ver partidas guardadas");
@@ -105,6 +117,10 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     private void agregarPuntuacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarPuntuacionMouseClicked
         agregarPuntuacion();
     }//GEN-LAST:event_agregarPuntuacionMouseClicked
+
+    private void calcularResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularResultadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calcularResultadoMouseClicked
 
     /**
      * @param args the command line arguments
