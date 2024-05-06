@@ -7,9 +7,8 @@ import java.util.Collections;
 import java.util.Random;
 import javax.swing.JButton;
 
-
 public class Ejercicio01_PIN extends javax.swing.JFrame {
-    
+
     static ArrayList<JButton> botones;
     static Random rndm = new Random();
 
@@ -21,25 +20,25 @@ public class Ejercicio01_PIN extends javax.swing.JFrame {
         setFrame();
         anadirBotones();
     }
-    
-    private void setFrame(){
+
+    private void setFrame() {
         setTitle("PIN");
         setSize(700, 100);
         setLocationRelativeTo(null);
         setResizable(false);
     }
-    
-    private void anadirBotones(){
-        
-        botones = new ArrayList<>(rndm.nextInt(0,10));
-        
-        for (int i = 0; i < botones.size(); i++) {
-            JButton nBotones = botones.get(i);
-            this.add(nBotones);
+
+    private void anadirBotones() {
+
+        int numBotones = rndm.nextInt(0, 10);
+        botones = new ArrayList<>(numBotones);
+
+        for (int i = 0; i < numBotones; i++) {
+            JButton nBoton = new JButton("Botón " + (i + 1));
+            botones.add(nBoton);
+            this.add(nBoton);
         }
-        
-        Arrays.sort(botones);
-        
+
     }
 
     /**

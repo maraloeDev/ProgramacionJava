@@ -1,21 +1,20 @@
 package Ejercicios;
 
-
 public class Ejercicio07_Empleados extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Ejercicio07_Empleados
-     */
     public Ejercicio07_Empleados() {
         initComponents();
         setFrame();
     }
-    
-   private void setFrame(){
-       setTitle("Ejercicio CSV");
-       setLocationRelativeTo(null);
-        
+
+    private void setFrame() {
+        setTitle("Ejercicio CSV");
+        setLocationRelativeTo(null);
+        setResizable(false);
+
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,11 +26,11 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        cargarDatos = new javax.swing.JButton();
+        buscarEmpleados = new javax.swing.JButton();
+        agregarMasDatos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        mostrarEmpleados = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -39,18 +38,13 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Cargar datos");
+        cargarDatos.setText("Cargar datos");
 
-        jButton2.setText("Buscar empleado");
+        buscarEmpleados.setText("Buscar empleado");
 
-        jButton3.setText("Agregar + datos");
+        agregarMasDatos.setText("Agregar + datos");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(mostrarEmpleados);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Ordenar por"));
 
@@ -100,9 +94,9 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscarEmpleados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cargarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(agregarMasDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -114,11 +108,11 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(cargarDatos)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(buscarEmpleados)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(agregarMasDatos)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -160,23 +154,15 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnCargar1;
-    private javax.swing.JButton btnCargar2;
-    private javax.swing.JButton btnCargar3;
-    private javax.swing.JButton btnCargar4;
-    private javax.swing.JButton btnCargar5;
-    private javax.swing.JButton btnCargar6;
-    private javax.swing.JButton btnCargar7;
+    private javax.swing.JButton agregarMasDatos;
+    private javax.swing.JButton buscarEmpleados;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton cargarDatos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> mostrarEmpleados;
     // End of variables declaration//GEN-END:variables
 }

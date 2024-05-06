@@ -73,7 +73,7 @@ public class Ejercicio05_GUIFincas extends javax.swing.JFrame {
             fos = new FileOutputStream(archivoFincas, true);
             bos = new BufferedOutputStream(fos);
             dos = new DataOutputStream(fos);
-            
+
             dos.writeInt(datosFincas.getNumeroIdentificacion());
             dos.writeUTF(datosFincas.getNombreFinca());
             dos.writeDouble(datosFincas.getMetrosFinca());
