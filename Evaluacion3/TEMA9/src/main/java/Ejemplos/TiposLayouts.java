@@ -1,66 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Ejemplos;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.SpringLayout;
-/**
- *
- * @author maraloed
- */
+
 public class TiposLayouts extends javax.swing.JFrame {
 
-    int contadorBotones=1;
-    
-    /**
-     * Creates new form TiposLayouts
-     */
     public TiposLayouts() {
         initComponents();
         setFrame();
         setFlowLayout();
-        setGridBag();
-        setBorderLayout();
-        setBoxLayout();
     }
-    
-   private void setFrame(){
-        setTitle("Administracion de diseño");
+
+    private void setFrame() {
+        setTitle("Administradores de diseño");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
     }
-   
-   private void setFlowLayout(){
-       
-       for (int i = 1; i <= 10; i++) {
-           
-           panelFlow.add(new JButton(String.valueOf(i)));
-           
-       }
-   }
-       
-       private void setGridBag(){  
-       
-   }
-       
-       private void setBorderLayout(){
-           
-           
-           
-       }
-       
-       private void setBoxLayout(){
-           for (int i = 0; i < 10; i++) {
-               
-               panelBox.add(new JButton(String.valueOf(i)));
-               
-           }
-       }
+
+    private void setFlowLayout() {
+
+        for (int i = 1; i <= 10; i++) {
+            panelFlow.add(new JButton(String.valueOf(i)));
+
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,31 +37,26 @@ public class TiposLayouts extends javax.swing.JFrame {
         panelFlow = new javax.swing.JPanel();
         panelGridBag = new javax.swing.JPanel();
         panelBox = new javax.swing.JPanel();
-        panelGridL = new javax.swing.JPanel();
+        panelGrid = new javax.swing.JPanel();
         panelBorder = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelFlow.setBackground(new java.awt.Color(102, 255, 102));
         panelFlow.setBorder(javax.swing.BorderFactory.createTitledBorder("FlowLayout"));
         getContentPane().add(panelFlow, java.awt.BorderLayout.PAGE_START);
 
-        panelGridBag.setBackground(new java.awt.Color(255, 102, 204));
-        panelGridBag.setBorder(javax.swing.BorderFactory.createTitledBorder("GrifidLayout"));
+        panelGridBag.setBorder(javax.swing.BorderFactory.createTitledBorder("GridBagLayout"));
         panelGridBag.setLayout(new java.awt.GridBagLayout());
         getContentPane().add(panelGridBag, java.awt.BorderLayout.LINE_START);
 
-        panelBox.setBackground(new java.awt.Color(204, 0, 255));
         panelBox.setBorder(javax.swing.BorderFactory.createTitledBorder("BoxLayout"));
         panelBox.setLayout(new javax.swing.BoxLayout(panelBox, javax.swing.BoxLayout.LINE_AXIS));
         getContentPane().add(panelBox, java.awt.BorderLayout.LINE_END);
 
-        panelGridL.setBackground(new java.awt.Color(204, 255, 204));
-        panelGridL.setBorder(javax.swing.BorderFactory.createTitledBorder("GridLayout"));
-        panelGridL.setLayout(new java.awt.GridLayout());
-        getContentPane().add(panelGridL, java.awt.BorderLayout.PAGE_END);
+        panelGrid.setBorder(javax.swing.BorderFactory.createTitledBorder("GridLayout"));
+        panelGrid.setLayout(new java.awt.GridLayout());
+        getContentPane().add(panelGrid, java.awt.BorderLayout.PAGE_END);
 
-        panelBorder.setBackground(new java.awt.Color(255, 255, 51));
         panelBorder.setBorder(javax.swing.BorderFactory.createTitledBorder("BorderLayout"));
         panelBorder.setLayout(new java.awt.BorderLayout());
         getContentPane().add(panelBorder, java.awt.BorderLayout.CENTER);
@@ -143,7 +101,7 @@ public class TiposLayouts extends javax.swing.JFrame {
     private javax.swing.JPanel panelBorder;
     private javax.swing.JPanel panelBox;
     private javax.swing.JPanel panelFlow;
+    private javax.swing.JPanel panelGrid;
     private javax.swing.JPanel panelGridBag;
-    private javax.swing.JPanel panelGridL;
     // End of variables declaration//GEN-END:variables
 }
