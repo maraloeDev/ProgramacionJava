@@ -16,7 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class Ejercicio06_Golf extends javax.swing.JFrame {
-    
+
     static int contadorIds = 1;
     static File archivoPrincipal = new File(".\\src\\main\\java\\EjerciciosSergio\\archivoPrincipal.bin");
     static ArrayList<Ejercicio06_datosGolf> listaDatos = new ArrayList<>();
@@ -31,28 +31,28 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     static FileInputStream fis;
     static BufferedInputStream bis;
     static DataInputStream dis;
-    
+
     public Ejercicio06_Golf() {
         initComponents();
         setFrame();
     }
-    
+
     private void setFrame() {
         setTitle("Golf");
         setResizable(false);
         setLocationRelativeTo(null);
     }
-    
+
     private void agregarPuntuaciones() {
-        
+
         String nombre = JOptionPane.showInputDialog(null, "Introduce en nombre del jugador");
         int nGolpes = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de golpes"));
         int nHoyos = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de hoyos jugados"));
-        
+
         int confirmacion = JOptionPane.showConfirmDialog(null, "Estas seguro de que quieres guardar todo");
-        
+
         if (confirmacion == JOptionPane.YES_OPTION) {
-            
+
             listaDatos.add(new Ejercicio06_datosGolf(contadorIds, nombre, nGolpes, nHoyos));
             JOptionPane.showMessageDialog(null, "Datos almacenados correctamente");
             contadorIds++;
@@ -60,10 +60,10 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
                 fos = new FileOutputStream(archivoPrincipal);
                 bos = new BufferedOutputStream(fos);
                 dos = new DataOutputStream(fos);
-                
+
                 dos.writeUTF(String.valueOf(listaDatos.toString()));
                 dos.close();
-                
+
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -73,18 +73,17 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Datos no almacenados");
         }
     }
-    
+
     private void verPartidas() {
-        
+
         listaPartidas.setModel(modeloLista);
         modeloLista.clear();
         try {
             fis = new FileInputStream(archivoPrincipal);
             bis = new BufferedInputStream(fis);
-            dis = new DataInputStream(fis); 
-            
-                modeloLista.addElement(dis.readUTF());
-            
+            dis = new DataInputStream(fis);
+
+            modeloLista.addElement(dis.readUTF());
             dis.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
