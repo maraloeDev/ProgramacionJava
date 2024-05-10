@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import org.apache.commons.collections4.comparators.ComparableComparator;
 
 public class Ejercicio06_Golf extends javax.swing.JFrame {
 
@@ -179,10 +179,10 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
 
     private void exportarPartida() {
 
+        ArrayList<Ejercicio06_datosGolf> exportaciones = new ArrayList<>();
         try {
 
             try {
-                id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
 
                 if (!memoryStick.exists()) {
 
@@ -192,8 +192,23 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
                 Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            fw = new FileWriter(memoryStick);
-            bw = new BufferedWriter(fw);
+            id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+            for (Ejercicio06_datosGolf partidaExistente : listaDatos) {
+
+                if (partidaExistente.getId() == id) {
+                    fw = new FileWriter(memoryStick);
+                    bw = new BufferedWriter(fw);
+
+                    exportaciones.add(new Ejercicio06_datosGolf(id, nombre, nGolpes, nHoyos));
+
+                    for (Ejercicio06_datosGolf export : exportaciones) {
+                        bw.write(String.valueOf(export));
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Partida exportada correctamente");
+                }
+                bw.close();
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);

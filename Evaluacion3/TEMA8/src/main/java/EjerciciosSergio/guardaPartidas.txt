@@ -1,0 +1,4 @@
+Id: 1
+Nombre = Eduardo
+Numero de golpes = 12
+Numero de hoyos = 5
