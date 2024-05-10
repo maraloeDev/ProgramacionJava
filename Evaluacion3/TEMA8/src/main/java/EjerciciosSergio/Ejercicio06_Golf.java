@@ -2,14 +2,20 @@ package EjerciciosSergio;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -17,10 +23,17 @@ import javax.swing.JOptionPane;
 
 public class Ejercicio06_Golf extends javax.swing.JFrame {
 
-    static int contadorIds = 1;
+    //Datos
+    static int id;
+    static String nombre;
+    static int nGolpes;
+    static int nHoyos;
+
+    static File memoryStick = new File(".\\src\\main\\java\\EjerciciosSergio\\guardaPartidas.txt");
     static File archivoPrincipal = new File(".\\src\\main\\java\\EjerciciosSergio\\archivoPrincipal.bin");
     static ArrayList<Ejercicio06_datosGolf> listaDatos = new ArrayList<>();
     static DefaultListModel<String> modeloLista = new DefaultListModel<>();
+    static Ejercicio06_datosGolf datosJugador;
 
     //Escritura Binaria
     static FileOutputStream fos;
@@ -31,6 +44,10 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     static FileInputStream fis;
     static BufferedInputStream bis;
     static DataInputStream dis;
+
+    //EscrituraPlana
+    FileWriter fw;
+    BufferedWriter bw;
 
     public Ejercicio06_Golf() {
         initComponents();
@@ -45,23 +62,31 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
 
     private void agregarPuntuaciones() {
 
-        String nombre = JOptionPane.showInputDialog(null, "Introduce en nombre del jugador");
-        int nGolpes = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de golpes"));
-        int nHoyos = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de hoyos jugados"));
+        id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+        nombre = JOptionPane.showInputDialog(null, "Introduce en nombre del jugador");
+        nGolpes = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de golpes"));
+        nHoyos = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce en numero de hoyos jugados"));
 
         int confirmacion = JOptionPane.showConfirmDialog(null, "Estas seguro de que quieres guardar todo");
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-
-            listaDatos.add(new Ejercicio06_datosGolf(contadorIds, nombre, nGolpes, nHoyos));
+            datosJugador = new Ejercicio06_datosGolf(id, nombre, nGolpes, nHoyos);
+            listaDatos.add(datosJugador);
             JOptionPane.showMessageDialog(null, "Datos almacenados correctamente");
-            contadorIds++;
+
             try {
                 fos = new FileOutputStream(archivoPrincipal);
                 bos = new BufferedOutputStream(fos);
                 dos = new DataOutputStream(fos);
 
-                dos.writeUTF(String.valueOf(listaDatos.toString()));
+                for (Ejercicio06_datosGolf datos : listaDatos) {
+
+                    dos.writeInt(datos.getId());
+                    dos.writeUTF(datos.getNombreJugador());
+                    dos.writeInt(datos.getnGolpes());
+                    dos.writeInt(datos.getnHoyos());
+
+                }
                 dos.close();
 
             } catch (FileNotFoundException ex) {
@@ -74,22 +99,106 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         }
     }
 
+    private void ordenacionPuntos() {
+        Collections.sort(listaDatos, new Comparator<Ejercicio06_datosGolf>() {
+
+            @Override
+            public int compare(Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) {
+                return Integer.compare(datos1.getnGolpes(), datos2.getnGolpes());
+            }
+        });
+    }
+
+    private void calcularResultado() {
+
+        id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id"));
+
+        boolean encontrado = false;
+        int suma = 0;
+        for (Ejercicio06_datosGolf calcular : listaDatos) {
+            if (calcular.getId() != id) {
+
+            } else {
+                if ((calcular.getId() == id) && calcular.getnHoyos() >= 3) {
+                    encontrado = true;
+                    suma += nGolpes;
+                    JOptionPane.showMessageDialog(null, "El numero de golpes en total han sido de " + suma);
+                }
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "Id no encontrado");
+        }
+        ordenacionPuntos();
+
+    }
+
     private void verPartidas() {
 
         listaPartidas.setModel(modeloLista);
         modeloLista.clear();
-        try {
-            fis = new FileInputStream(archivoPrincipal);
-            bis = new BufferedInputStream(fis);
-            dis = new DataInputStream(fis);
 
-            modeloLista.addElement(dis.readUTF());
-            dis.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
+        if (listaDatos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "La lista esta vacia");
+        } else {
+            try {
+
+                List<Ejercicio06_datosGolf> tenp = new ArrayList<>();
+                fis = new FileInputStream(archivoPrincipal);
+                bis = new BufferedInputStream(fis);
+                dis = new DataInputStream(fis);
+
+                modeloLista.addElement("ID  NOMBRE  NGOLPES  NHOYOS");
+                while (dis.available() > 0) {
+
+                    tenp.add(new Ejercicio06_datosGolf(dis.readInt(), dis.readUTF(), dis.readInt(), dis.readInt()));
+
+                }
+                Collections.sort(tenp, new Comparator<Ejercicio06_datosGolf>() {
+
+                    @Override
+                    public int compare(Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) {
+                        return Integer.compare(datos1.getnGolpes(), datos2.getnGolpes());
+                    }
+                });
+
+                for (Ejercicio06_datosGolf ordena : tenp) {
+                    modeloLista.addElement(ordena.getId() + "   " + ordena.getNombreJugador() + "   " + ordena.getnGolpes() + "  " + ordena.getnHoyos());
+                }
+
+                dis.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    private void exportarPartida() {
+
+        try {
+
+            try {
+                id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+
+                if (!memoryStick.exists()) {
+
+                    memoryStick.createNewFile();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            fw = new FileWriter(memoryStick);
+            bw = new BufferedWriter(fw);
+
         } catch (IOException ex) {
             Logger.getLogger(Ejercicio06_Golf.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -105,8 +214,6 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         listaPartidas = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
-        menuVer = new javax.swing.JMenuItem();
-        menuModificar = new javax.swing.JMenuItem();
         menuExportar = new javax.swing.JMenuItem();
         menuPartidas = new javax.swing.JMenu();
         menuAgregarPuntuacion = new javax.swing.JMenuItem();
@@ -120,13 +227,12 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
 
         menuArchivo.setText("Archivo");
 
-        menuVer.setText("Ver");
-        menuArchivo.add(menuVer);
-
-        menuModificar.setText("Modificar");
-        menuArchivo.add(menuModificar);
-
         menuExportar.setText("Exportar partida");
+        menuExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportarActionPerformed(evt);
+            }
+        });
         menuArchivo.add(menuExportar);
 
         jMenuBar1.add(menuArchivo);
@@ -186,12 +292,16 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAgregarPuntuacionActionPerformed
 
     private void menuCarcularResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCarcularResultadoActionPerformed
-        // TODO add your handling code here:
+        calcularResultado();
     }//GEN-LAST:event_menuCarcularResultadoActionPerformed
 
     private void menuVerPartidasGuardadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerPartidasGuardadasActionPerformed
         verPartidas();
     }//GEN-LAST:event_menuVerPartidasGuardadasActionPerformed
+
+    private void menuExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarActionPerformed
+        exportarPartida();
+    }//GEN-LAST:event_menuExportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,10 +331,8 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ejercicio06_Golf().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Ejercicio06_Golf().setVisible(true);
         });
     }
 
@@ -236,9 +344,7 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenuItem menuCarcularResultado;
     private javax.swing.JMenuItem menuExportar;
-    private javax.swing.JMenuItem menuModificar;
     private javax.swing.JMenu menuPartidas;
-    private javax.swing.JMenuItem menuVer;
     private javax.swing.JMenuItem menuVerPartidasGuardadas;
     // End of variables declaration//GEN-END:variables
 }

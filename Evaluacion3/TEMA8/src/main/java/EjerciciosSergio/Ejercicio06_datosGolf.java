@@ -1,6 +1,8 @@
 package EjerciciosSergio;
 
-public class Ejercicio06_datosGolf {
+import java.util.Comparator;
+
+public class Ejercicio06_datosGolf{
 
     private int id;
     private String nombreJugador;
@@ -12,6 +14,14 @@ public class Ejercicio06_datosGolf {
         this.nombreJugador = nombreJugador;
         this.nGolpes = nGolpes;
         this.nHoyos = nHoyos;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombreJugador() {
@@ -43,7 +53,7 @@ public class Ejercicio06_datosGolf {
         return "Id: " + id + "\n"
                 + "Nombre = " + nombreJugador + "\n"
                 + "Numero de golpes = " + nGolpes + "\n"
-                + "Numero de hoyos = " + nHoyos;
+                + "Numero de hoyos = " + nHoyos + "\n";
     }
 
 }
