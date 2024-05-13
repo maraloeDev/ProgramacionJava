@@ -1,6 +1,6 @@
 package EjerciciosSergio;
 
-import java.util.Comparator;
+
 
 public class Ejercicio06_datosGolf{
 

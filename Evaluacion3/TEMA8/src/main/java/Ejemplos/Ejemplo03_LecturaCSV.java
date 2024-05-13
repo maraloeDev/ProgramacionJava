@@ -19,7 +19,6 @@ public class Ejemplo03_LecturaCSV {
 
         try {
             br = new BufferedReader(new FileReader(archivo));
-
             csvTB = new CsvToBeanBuilder<Ejemplo03_TiempoGolf>(br).withType(Ejemplo03_TiempoGolf.class).withIgnoreLeadingWhiteSpace(true).build();
 
             for (Ejemplo03_TiempoGolf golf : csvTB.parse()) {

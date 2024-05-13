@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import org.apache.commons.collections4.comparators.ComparableComparator;
 
 public class Ejercicio06_Golf extends javax.swing.JFrame {
 
@@ -75,6 +74,10 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Datos almacenados correctamente");
 
             try {
+                
+                if(!archivoPrincipal.exists()){
+                    archivoPrincipal.createNewFile();
+                }
                 fos = new FileOutputStream(archivoPrincipal);
                 bos = new BufferedOutputStream(fos);
                 dos = new DataOutputStream(fos);
@@ -100,13 +103,7 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
     }
 
     private void ordenacionPuntos() {
-        Collections.sort(listaDatos, new Comparator<Ejercicio06_datosGolf>() {
-
-            @Override
-            public int compare(Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) {
-                return Integer.compare(datos1.getnGolpes(), datos2.getnGolpes());
-            }
-        });
+        Collections.sort(listaDatos, (Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) -> Integer.compare(datos1.getnGolpes(), datos2.getnGolpes()));
     }
 
     private void calcularResultado() {
@@ -155,13 +152,7 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
                     tenp.add(new Ejercicio06_datosGolf(dis.readInt(), dis.readUTF(), dis.readInt(), dis.readInt()));
 
                 }
-                Collections.sort(tenp, new Comparator<Ejercicio06_datosGolf>() {
-
-                    @Override
-                    public int compare(Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) {
-                        return Integer.compare(datos1.getnGolpes(), datos2.getnGolpes());
-                    }
-                });
+                Collections.sort(tenp, (Ejercicio06_datosGolf datos1, Ejercicio06_datosGolf datos2) -> Integer.compare(datos1.getnGolpes(), datos2.getnGolpes()));
 
                 for (Ejercicio06_datosGolf ordena : tenp) {
                     modeloLista.addElement(ordena.getId() + "   " + ordena.getNombreJugador() + "   " + ordena.getnGolpes() + "  " + ordena.getnHoyos());

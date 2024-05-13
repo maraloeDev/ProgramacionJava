@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EscrituraCSV {
+public class Ejemplo03_EscrituraCSV {
 
     static BufferedWriter bw;
     static Ejemplo03_TiempoGolf partidos;
@@ -27,7 +27,7 @@ public class EscrituraCSV {
             csvW.close();
 
         } catch (IOException ex) {
-            Logger.getLogger(EscrituraCSV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ejemplo03_EscrituraCSV.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
