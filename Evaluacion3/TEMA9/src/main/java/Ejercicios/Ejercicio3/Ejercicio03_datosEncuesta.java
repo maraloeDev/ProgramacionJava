@@ -1,4 +1,4 @@
-package Ejercicios;
+package Ejercicios.Ejercicio3;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
@@ -43,12 +44,12 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
     static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
     //Archivo
-    File archivoEncuesta = new File(".\\src\\main\\java\\Ejercicios\\encuesta.csv");
+    File archivoEncuesta = new File(".\\src\\main\\java\\Ejercicios\\Ejercicio3\\encuesta.csv");
 
     //Ventana nueva
     JFrame ventanaDatos;
     JPanel panelDatos;
-    JTextField datosEscritura;
+    JTextArea datosEscritura;
 
     Ejercicio03_opcionesEncuesta datosEncuesta = new Ejercicio03_opcionesEncuesta();
 
@@ -84,6 +85,7 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
                 sumaNsNc += nSnC;
             } else {
                 JOptionPane.showMessageDialog(null, "No has seleccionado nada");
+                return;
             }
 
             JOptionPane.showMessageDialog(null, "Votacion almacenada correctamente");
@@ -97,17 +99,10 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
 
             bw.write(datosEncuesta.toString());
 
+            csvW.close();
+
         } catch (IOException ex) {
             Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (csvW != null) {
-
-                try {
-                    csvW.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
     }
 
@@ -120,7 +115,7 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
         } else {
             ventanaDatos = new JFrame(sdf.format(new Date()));
             panelDatos = new JPanel();
-            datosEscritura = new JTextField();
+            datosEscritura = new JTextArea();
 
             ventanaDatos.setVisible(true);
             ventanaDatos.add(panelDatos);
@@ -148,13 +143,19 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
-            for (Object datos : csvTB.parse()) {
-                datosEscritura.setText(datosEscritura.getText() + String.valueOf(Arrays.toString(datosEncuesta.toArray())) + "\n" + datos.toString() + "\n");
+            for (var datos : csvTB.parse()) {
+
+                Ejercicio03_opcionesEncuesta aux = (Ejercicio03_opcionesEncuesta) datos;
+                datosEscritura.setText("Total votos: " + aux.calcularTotal() + "\n"
+                        + "\n Si: " + aux.porcentajeSi() + "%\n"
+                        + "\n No: " + aux.porcentajeNo() + "%\n"
+                        + "\n NS/NC: " + aux.porcentajeNsNc() + "%\n");
 
             }
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ejercicio03_datosEncuesta.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -276,16 +277,24 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ejercicio03_datosEncuesta.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
