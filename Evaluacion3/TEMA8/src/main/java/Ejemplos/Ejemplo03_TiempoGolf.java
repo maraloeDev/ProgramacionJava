@@ -75,7 +75,7 @@ public class Ejemplo03_TiempoGolf {
 
     @Override
     public String toString() {
-        return 
+        return
                  panorama + "," +
                  temperatura +"," +
                  humedad +"," +
@@ -87,11 +87,11 @@ public class Ejemplo03_TiempoGolf {
         
         String [] datos = new String[5];
         
-        datos[0] = panorama;
-        datos[1] = temperatura;
-        datos[2] = humedad;
-        datos[3] = String.valueOf(viento);
-        datos[4] = jugarGolf;
+        datos[0] = "Panorama";
+        datos[1] = "Temperatura";
+        datos[2] = "Humedad";
+        datos[3] = "Viento";
+        datos[4] = "JugarGolf";
         
         return datos;
     }

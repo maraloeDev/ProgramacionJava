@@ -32,10 +32,6 @@
               <Component id="tituloEncuesta" min="-2" pref="312" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="brnVotar" max="32767" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -45,9 +41,12 @@
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnMostrarResultados" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="brnVotar" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnMostrarResultados" alignment="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>

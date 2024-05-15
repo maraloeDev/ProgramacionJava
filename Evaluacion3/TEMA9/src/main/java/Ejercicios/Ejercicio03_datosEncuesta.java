@@ -2,13 +2,18 @@ package Ejercicios;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +34,7 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
 
     //Lectura CSV
     static BufferedReader br;
-    static CSVReader csvR;
+    static CsvToBean csvTB;
 
     //Escritura CSV
     static BufferedWriter bw;
@@ -107,22 +112,50 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
     }
 
     private void mostrarResultado() {
-        ventanaDatos = new JFrame(sdf.format(new Date()));
-        panelDatos = new JPanel();
-        datosEscritura = new JTextField();
 
-        ventanaDatos.setVisible(true);
-        ventanaDatos.add(panelDatos);
-        ventanaDatos.setResizable(false);
-        ventanaDatos.setLocationRelativeTo(null);
-        ventanaDatos.setSize(new Dimension(400, 300));
+        if (!archivoEncuesta.exists()) {
 
-        datosEscritura.setSize(new Dimension(500, 500));
-        datosEscritura.setText("Hola");
-        datosEscritura.setEditable(false);
+            JOptionPane.showMessageDialog(null, "No existe ningun archivo encuesta.csv");
 
-        panelDatos.setSize(new Dimension(500, 700));
-        panelDatos.add(datosEscritura);
+        } else {
+            ventanaDatos = new JFrame(sdf.format(new Date()));
+            panelDatos = new JPanel();
+            datosEscritura = new JTextField();
+
+            ventanaDatos.setVisible(true);
+            ventanaDatos.add(panelDatos);
+            ventanaDatos.setResizable(false);
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setSize(new Dimension(500, 500));
+
+            datosEscritura.setPreferredSize(new Dimension(400, 300));
+            datosEscritura.setEditable(false);
+
+            panelDatos.setSize(new Dimension(500, 500));
+            panelDatos.add(datosEscritura);
+
+            lecturaCSV();
+
+        }
+    }
+
+    void lecturaCSV() {
+
+        try {
+            br = new BufferedReader(new FileReader(archivoEncuesta));
+            csvTB = new CsvToBeanBuilder<Ejercicio03_opcionesEncuesta>(br)
+                    .withType(Ejercicio03_opcionesEncuesta.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            for (Object datos : csvTB.parse()) {
+                datosEscritura.setText(datosEscritura.getText() + String.valueOf(Arrays.toString(datosEncuesta.toArray())) + "\n" + datos.toString() + "\n");
+
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Ejercicio03_datosEncuesta.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -186,9 +219,6 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE)
                 .addComponent(tituloEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(brnVotar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(135, 135, 135)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +228,9 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnMostrarResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(brnVotar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMostrarResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
