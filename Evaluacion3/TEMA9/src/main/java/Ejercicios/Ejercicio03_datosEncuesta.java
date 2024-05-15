@@ -2,6 +2,7 @@ package Ejercicios;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.xml.crypto.Data;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
 
@@ -32,11 +34,16 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
     //Escritura CSV
     static BufferedWriter bw;
     static CSVWriter csvW;
-    
+
     static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
     //Archivo
     File archivoEncuesta = new File(".\\src\\main\\java\\Ejercicios\\encuesta.csv");
+
+    //Ventana nueva
+    JFrame ventanaDatos;
+    JPanel panelDatos;
+    JTextField datosEscritura;
 
     Ejercicio03_opcionesEncuesta datosEncuesta = new Ejercicio03_opcionesEncuesta();
 
@@ -100,11 +107,23 @@ public class Ejercicio03_datosEncuesta extends javax.swing.JFrame {
     }
 
     private void mostrarResultado() {
-        JFrame ventanaDatos = new JFrame(sdf.format(new Date()));
-        
+        ventanaDatos = new JFrame(sdf.format(new Date()));
+        panelDatos = new JPanel();
+        datosEscritura = new JTextField();
+
         ventanaDatos.setVisible(true);
-        ventanaDatos.setExtendedState(MAXIMIZED_BOTH);
-        
+        ventanaDatos.add(panelDatos);
+        ventanaDatos.setResizable(false);
+        ventanaDatos.setLocationRelativeTo(null);
+        ventanaDatos.setSize(new Dimension(400, 300));
+
+        datosEscritura.setSize(new Dimension(500, 500));
+        datosEscritura.setText("Hola");
+        datosEscritura.setEditable(false);
+
+        panelDatos.setSize(new Dimension(500, 700));
+        panelDatos.add(datosEscritura);
+
     }
 
     /**
