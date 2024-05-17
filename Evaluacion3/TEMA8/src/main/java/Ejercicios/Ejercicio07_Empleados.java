@@ -11,10 +11,9 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
         setTitle("Ejercicio CSV");
         setLocationRelativeTo(null);
         setResizable(false);
-
     }
 
-   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -25,16 +24,16 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        conjjuntoBotones = new javax.swing.ButtonGroup();
         cargarDatos = new javax.swing.JButton();
         buscarEmpleados = new javax.swing.JButton();
         agregarMasDatos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         mostrarEmpleados = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        btnId = new javax.swing.JRadioButton();
+        btnApellidos = new javax.swing.JRadioButton();
+        btnDepartamento = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,15 +47,15 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Ordenar por"));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("id");
+        conjjuntoBotones.add(btnId);
+        btnId.setSelected(true);
+        btnId.setText("id");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("apellidos");
+        conjjuntoBotones.add(btnApellidos);
+        btnApellidos.setText("apellidos");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("departamento");
+        conjjuntoBotones.add(btnDepartamento);
+        btnDepartamento.setText("departamento");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,11 +63,11 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
+                .addComponent(btnId)
                 .addGap(33, 33, 33)
-                .addComponent(jRadioButton2)
+                .addComponent(btnApellidos)
                 .addGap(50, 50, 50)
-                .addComponent(jRadioButton3)
+                .addComponent(btnDepartamento)
                 .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
@@ -76,9 +75,9 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(btnId)
+                    .addComponent(btnApellidos)
+                    .addComponent(btnDepartamento))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -155,13 +154,13 @@ public class Ejercicio07_Empleados extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarMasDatos;
+    private javax.swing.JRadioButton btnApellidos;
+    private javax.swing.JRadioButton btnDepartamento;
+    private javax.swing.JRadioButton btnId;
     private javax.swing.JButton buscarEmpleados;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cargarDatos;
+    private javax.swing.ButtonGroup conjjuntoBotones;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> mostrarEmpleados;
     // End of variables declaration//GEN-END:variables

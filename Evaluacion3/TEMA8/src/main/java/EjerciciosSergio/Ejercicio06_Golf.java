@@ -74,8 +74,8 @@ public class Ejercicio06_Golf extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Datos almacenados correctamente");
 
             try {
-                
-                if(!archivoPrincipal.exists()){
+
+                if (!archivoPrincipal.exists()) {
                     archivoPrincipal.createNewFile();
                 }
                 fos = new FileOutputStream(archivoPrincipal);
