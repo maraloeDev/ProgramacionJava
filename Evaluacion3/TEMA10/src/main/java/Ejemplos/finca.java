@@ -2,7 +2,7 @@ package Ejemplos;
 
 
 public class finca {
-    int contadorIds;
+    
     int id;
     String direccion;
     double area;
@@ -11,19 +11,11 @@ public class finca {
     public finca() {
     }
 
-    public finca(String direccion, double area, int propiestarioId) {
-        this.id = contadorIds;
+    public finca(int id, String direccion, double area, int propiestarioId) {
+        this.id = id;  
         this.direccion = direccion;
         this.area = area;
         this.propiestarioId = propiestarioId;
-    }
-
-    public int getContadorIds() {
-        return contadorIds;
-    }
-
-    public void setContadorIds(int contadorIds) {
-        this.contadorIds = contadorIds;
     }
 
     public int getId() {
@@ -60,7 +52,11 @@ public class finca {
 
     @Override
     public String toString() {
-        return "finca{" + "contadorIds=" + contadorIds + ", id=" + id + ", direccion=" + direccion + ", area=" + area + ", propiestarioId=" + propiestarioId + '}';
+        return 
+                "Id=" + id +
+                "Direccion=" + direccion +
+                "Area=" + area +
+                "PropietarioId=" + propiestarioId;
     }
     
     

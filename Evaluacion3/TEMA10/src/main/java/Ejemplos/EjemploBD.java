@@ -1,6 +1,18 @@
 package Ejemplos;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class EjemploBD extends javax.swing.JFrame {
 
@@ -9,6 +21,12 @@ public class EjemploBD extends javax.swing.JFrame {
     static String url = "jdbc:mysql://localhost:3306/fincas";
     static String user = "root";
     static String password = "";
+
+    static Statement st;
+    static ResultSet rs;
+    static PreparedStatement ps;
+    static finca finca;
+    static ArrayList<finca> listaFincas = new ArrayList<>();
 
     public EjemploBD() {
         initComponents();
@@ -20,7 +38,154 @@ public class EjemploBD extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         lasFincas.setEditable(false);
+        conexionBD();
+    }
 
+    void conexionBD() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+
+            //Cuando se abre la ventana, se "Intenta conectar a la base de datos"
+            public void windowOpened(WindowEvent e) {
+                try {
+                    con = DriverManager.getConnection(url, user, password);
+                    JOptionPane.showMessageDialog(null, "Base de Datos conectada");
+                } catch (SQLException ex) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "Base de Datos NO conectada");
+                }
+
+            }
+
+            //Cuando se cierra la ventana, se cierra la conexion
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+    }
+
+    void insertarFincas() {
+
+        try {
+            int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+            String direccion = JOptionPane.showInputDialog(null, "Introduce una direccion: ");
+            double area = Double.parseDouble(JOptionPane.showInputDialog(null, "Introduce un area: "));
+            int propietario = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce id del propietario"));
+
+            conexionBD();
+
+            String consulta = "INSERT INTO finca (id, direccion, area, propietarioID) VALUES (?,?,?,?)";
+
+            PreparedStatement ps = con.prepareCall(consulta);
+            ps.setInt(1, id);
+            ps.setString(2, direccion);
+            ps.setDouble(3, area);
+            ps.setInt(4, propietario);
+
+            int filasAfectadas = ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Finca agregada correctamente");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void recorreFincas() {
+        
+        StringBuilder textoFincas = new StringBuilder();
+
+        listaFincas.clear();
+
+        try {
+            String consulta = "SELECT id, direccion, area, propietarioId FROM finca";
+            st = con.createStatement();
+            rs = st.executeQuery(consulta);
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String direccion = rs.getString(2);
+                double area = rs.getDouble(3);
+                int propietarioId = rs.getInt(4);
+
+                finca = new finca(id, direccion, area, propietarioId);
+                listaFincas.add(finca);
+            }
+            rs.close();
+            st.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for (finca finca : listaFincas) {
+            textoFincas.append(finca.toString()).append("\n");
+
+        }
+
+        lasFincas.setText(textoFincas.toString());
+
+    }
+
+    void actualizarFincas() {
+
+        try {
+            recorreFincas();
+
+            int idActualizar = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce el id de la finca a actualizar"));
+
+            int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce un id: "));
+            String direccion = JOptionPane.showInputDialog(null, "Introduce una direccion: ");
+            double area = Double.parseDouble(JOptionPane.showInputDialog(null, "Introduce un area: "));
+            int propietario = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce id del propietario"));
+
+            String consulta = "UPDATE finca SET direccion = ?, area = ?, propietarioId = ? WHERE id = ?";
+
+            ps = con.prepareCall(consulta);
+
+            ps.setString(1, direccion);
+            ps.setDouble(2, area);
+            ps.setInt(3, propietario);
+            ps.setInt(4, id);
+
+            JOptionPane.showMessageDialog(null, "Filas actualizadas: " + ps.executeUpdate());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void eliminarFinca() {
+
+        try {
+            recorreFincas();
+            int idEliminar = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce el id de la finca a eliminar"));
+
+            String consulta = "DELETE FROM finca WHERE ID = ?";
+
+            ps = con.prepareStatement(consulta);
+            ps.setInt(1, idEliminar);
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Finca eliminada");
+            ps.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void verFincas() {
+        recorreFincas();
     }
 
     /**
@@ -42,12 +207,32 @@ public class EjemploBD extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         insetarFincas.setText("Insertar Finca");
+        insetarFincas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insetarFincasMouseClicked(evt);
+            }
+        });
 
         actualizarFincas.setText("Actualizar Finca");
+        actualizarFincas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                actualizarFincasMouseClicked(evt);
+            }
+        });
 
         eliminarFincas.setText("Eliminar Finca");
+        eliminarFincas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarFincasMouseClicked(evt);
+            }
+        });
 
         verFincas.setText("Ver Fincas");
+        verFincas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verFincasMouseClicked(evt);
+            }
+        });
 
         lasFincas.setColumns(20);
         lasFincas.setRows(5);
@@ -60,19 +245,23 @@ public class EjemploBD extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(eliminarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(verFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(actualizarFincas)
                     .addComponent(insetarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addComponent(insetarFincas)
                 .addGap(31, 31, 31)
                 .addComponent(actualizarFincas)
@@ -80,15 +269,27 @@ public class EjemploBD extends javax.swing.JFrame {
                 .addComponent(eliminarFincas)
                 .addGap(36, 36, 36)
                 .addComponent(verFincas)
-                .addContainerGap(76, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void insetarFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insetarFincasMouseClicked
+        insertarFincas();
+    }//GEN-LAST:event_insetarFincasMouseClicked
+
+    private void actualizarFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actualizarFincasMouseClicked
+        actualizarFincas();
+    }//GEN-LAST:event_actualizarFincasMouseClicked
+
+    private void eliminarFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarFincasMouseClicked
+        eliminarFinca();
+    }//GEN-LAST:event_eliminarFincasMouseClicked
+
+    private void verFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verFincasMouseClicked
+        verFincas();
+    }//GEN-LAST:event_verFincasMouseClicked
 
     /**
      * @param args the command line arguments
