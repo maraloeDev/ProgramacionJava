@@ -72,16 +72,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cargar datos"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cargarDatosMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buscarEmpleados">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar empleado"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buscarEmpleadosMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="agregarMasDatos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar + datos"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="agregarMasDatosMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>

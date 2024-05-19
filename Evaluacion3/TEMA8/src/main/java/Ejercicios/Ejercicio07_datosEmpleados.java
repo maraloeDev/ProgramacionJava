@@ -21,8 +21,6 @@ public class Ejercicio07_datosEmpleados{
         this.apellidos = apellidos;
         this.nombreDepartamento = nombreDepartamento;
     }
-    
-    
 
     public int getId() {
         return id;
@@ -48,17 +46,44 @@ public class Ejercicio07_datosEmpleados{
         this.nombreDepartamento = nombreDepartamento;
     }
 
-    @Override
-    public String toString() {
-        return id + "," + apellidos + "," + nombreDepartamento;
-    }
-
-    
-    
+    //Cabecera CSV
     public String[] toArray(){
         
         String[] datos = {"ID", "APELLIDOS", "NOMBRE DEPARTAMENTO"};
         return datos;
+    }
+    
+    //Ordenado por ID
+    @Override
+    public String toString() {
+        return id + "," + apellidos + "," + nombreDepartamento;
+    }
+    
+    //Cabecera CSV
+    public String[] toArrayApellidos(){
+        
+        String[] datos = {"APELLIDOS", "ID", "NOMBRE DEPARTAMENTO"};
+        return datos;
+    }
+    
+    //Ordenado por apellidos
+    
+    public String toStringApellidos() {
+        return apellidos + "," + id + "," + nombreDepartamento;
+    }
+    
+    
+    //Cabecera CSV
+    public String[] toArrayDepartamento(){
+        
+        String[] datos = {"NOMBRE DEPARTAMENTO", "APELLIDOS", "ID"};
+        return datos;
+    }
+    
+    //Ordenado por departamento
+    
+    public String toStringDepartamentos() {
+        return nombreDepartamento + "," + apellidos + "," + id;
     }
     
     
