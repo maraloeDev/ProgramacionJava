@@ -1,4 +1,4 @@
-package Ejemplos;
+package EjerciciosSergio;
 
 
 public class propietario {
