@@ -4,13 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.SocketOptions;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -32,9 +32,11 @@ public class App {
     //EscrituraTxt
     static BufferedWriter bw;
     static File archivo = new File(".\\src\\main\\java\\Problema1\\incidencias.txt");
-    static String CIF_cliente;
+    static String cIF_cliente;
     static String nombre_cliente;
     static boolean clientExist = false;
+    static Cliente c = new Cliente();
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm");
 
     //AlmacenaClientes
     static ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -70,7 +72,7 @@ public class App {
                 System.out.println("Introduce una opcion: \n A  B o x (Salir del programa)");
                 opcion = scanner.nextLine();
 
-                switch (opcion) {
+                switch (opcion.toLowerCase()) {
                     case "a":
 
                         altaClientes();
@@ -91,98 +93,122 @@ public class App {
                 Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } while (!opcion.equalsIgnoreCase("a") || !opcion.equalsIgnoreCase("b") || !opcion.equalsIgnoreCase("x"));
+        } while (!opcion.equalsIgnoreCase("x"));
     }
 
     private static void altaClientes() {
-        System.out.print("Introduce un CIF: ");
-        CIF_cliente = scanner.next();
-
-        scanner.nextLine();
-
-        System.out.println("Introduce un nombre");
-        nombre_cliente = scanner.nextLine();
 
         try {
-            String consultaComprobacion = "SELECT * FROM clientes WHERE CIF_cliente = ?";
+            System.out.println("Introduce un CIF");
+            cIF_cliente = scanner.nextLine();
 
-            ps = con.prepareStatement(consultaComprobacion);
-            ps.setString(1, CIF_cliente);
+            System.out.println("Introduce un nombre");
+            nombre_cliente = scanner.nextLine();
 
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            clientExist = true;
+            String consulta = "SELECT * FROM clientes WHERE CIF_cliente = ?";
 
-            if (clientExist) {
-                System.out.println("El cliente ya existe");
-                registrarIncidencia(CIF_cliente, "El cliente ya existe");
-            } else {
-                String consulta = "INSERT INTO clientes (CIF_cliente, nombre_cliente) VALUES (?,?)";
-                ps = con.prepareStatement(consulta);
+            ps = con.prepareStatement(consulta);
 
-                ps.setString(1, CIF_cliente);
-                ps.setString(2, nombre_cliente);
+            ps.setString(1, cIF_cliente);
+            rs = ps.executeQuery();
+            boolean existe = rs.next(); //El rs.next() devueve el siguiente resultado    //Si hay 1 resultado la primera nos dara true y la segunda false
+            ps.close();
 
-                ps.executeUpdate();
+            try {
 
-                System.out.println("Cliente agregado correctamente");
+                if (existe) {
+
+                    if (!archivo.exists()) {
+                        try {
+                            archivo.createNewFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                    try {
+                        bw = new BufferedWriter(new FileWriter(archivo, true));
+
+                        bw.write(sdf.format(new java.util.Date()) + "-" + "A" + "-" + cIF_cliente);
+                        bw.newLine();
+
+                        bw.close();
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else {
+
+                    String consultaInsert = "INSERT INTO clientes (CIF_cliente, nombre_cliente) VALUES(?, ?)";
+
+                    ps = con.prepareStatement(consultaInsert);
+                    ps.setString(1, cIF_cliente);
+                    ps.setString(2, nombre_cliente);
+                    ps.executeUpdate();
+
+                    System.out.println("Fila insertada");
+                    ps.close();
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
-    private static void registrarIncidencia(String CIF_cliente, String mensaje) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
-            bw.write("CIF Cliente: " + CIF_cliente + ", Incidencia: " + mensaje);
-            bw.newLine();
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private static void bajaClientes() {
 
         try {
-            String consulta = "DELETE FROM clientes where nombre_cliente = ?";
-
             System.out.println("Introduce un nombre de un cliente: ");
             String nombre_cliente = scanner.nextLine();
 
-            ps = con.prepareStatement(consulta);
-
-            ps.setString(1, nombre_cliente);
-
-            ps.executeUpdate();
-            System.out.println("Cliente eliminado");
-            ps.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    private static void recorreLista() {
-        try {
-            String consulta = "SELECT *  FROM clientes";
-
+            // Verificar si el cliente existe
+            String consultaExiste = "SELECT * FROM clientes WHERE nombre_cliente = ?";
             st = con.createStatement();
-            rs = st.executeQuery(consulta);
+            rs = st.executeQuery(consultaExiste);
+            try {
 
-            while (rs.next()) {
-                rs.getString(1);
-                rs.getString(2);
+                if (!rs.next()) {
+
+                    if (!archivo.exists()) {
+                        try {
+                            archivo.createNewFile();
+                        } catch (IOException ex) {
+                            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                    try {
+                        bw = new BufferedWriter(new FileWriter(archivo, true));
+
+                        bw.write(sdf.format(new java.util.Date()) + "-" + "B" + "-" + nombre_cliente);
+                        bw.newLine();
+
+                        bw.close();
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else {
+                    String consulta = "DELETE FROM clientes WHERE nombre_cliente = ?";
+                    System.out.println("Cliente eliminado");
+
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
-            st.close();
-            rs.close();
 
-            
-
-        } catch (SQLException ex) {
+    }   catch (SQLException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
