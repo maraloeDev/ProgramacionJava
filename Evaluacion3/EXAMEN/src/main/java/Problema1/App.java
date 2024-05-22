@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,12 +33,8 @@ public class App {
     static File archivo = new File(".\\src\\main\\java\\Problema1\\incidencias.txt");
     static String cIF_cliente;
     static String nombre_cliente;
-    static boolean clientExist = false;
     static Cliente c = new Cliente();
     static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm");
-
-    //AlmacenaClientes
-    static ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     public static void main(String[] args) {
         conexionBD();
@@ -164,51 +159,47 @@ public class App {
 
     private static void bajaClientes() {
 
-        try {
-            System.out.println("Introduce un nombre de un cliente: ");
-            String nombre_cliente = scanner.nextLine();
+        System.out.println("Introduce un cliente");
+        String nombreCliente = scanner.nextLine();
 
-            // Verificar si el cliente existe
-            String consultaExiste = "SELECT * FROM clientes WHERE nombre_cliente = ?";
-            st = con.createStatement();
-            rs = st.executeQuery(consultaExiste);
-            try {
+        String consultaExistente = "SELECT * FROM clientes WHERE nombre_cliente = ?";
+        String consultaEliminar = "DELETE FROM clientes WHERE nombre_cliente = ?";
+        boolean clienteExiste = false;
 
-                if (!rs.next()) {
+        try (PreparedStatement psExistente = con.prepareStatement(consultaExistente)) {
+            psExistente.setString(1, nombreCliente);
 
-                    if (!archivo.exists()) {
-                        try {
-                            archivo.createNewFile();
-                        } catch (IOException ex) {
-                            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                    try {
-                        bw = new BufferedWriter(new FileWriter(archivo, true));
-
-                        bw.write(sdf.format(new java.util.Date()) + "-" + "B" + "-" + nombre_cliente);
-                        bw.newLine();
-
-                        bw.close();
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                } else {
-                    String consulta = "DELETE FROM clientes WHERE nombre_cliente = ?";
-                    System.out.println("Cliente eliminado");
-
-
+            try (ResultSet rs = psExistente.executeQuery()) {
+                if (rs.next()) {
+                    clienteExiste = true;
                 }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-    }   catch (SQLException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            if (clienteExiste) { //Si existe se elimina
+                try (PreparedStatement psEliminar = con.prepareStatement(consultaEliminar)) {
+                    psEliminar.setString(1, nombreCliente);
+                    psEliminar.executeUpdate();
+
+                    System.out.println("Cliente eliminado");
+                }
+                
+            } else { // Si no existe se elimina
+
+                try {
+                    bw = new BufferedWriter(new FileWriter(archivo, true));
+
+                    bw.write(sdf.format(new java.util.Date()) + "-" + "B" + "-" + nombreCliente);
+                    bw.newLine();
+
+                    bw.close();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
