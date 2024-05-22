@@ -31,7 +31,8 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "CIF_cliente=" + CIF_cliente + ", nombre_cliente=" + nombre_cliente + '}';
+        return "CIF_cliente " + CIF_cliente + "\n" + 
+                "Nombre_cliente " + nombre_cliente;
     }
     
     
