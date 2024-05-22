@@ -1,21 +1,88 @@
 package Ejercicios;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 public class Almacen extends javax.swing.JFrame {
+
+    static String url = "jdbc:mysql://localhost:3306/almacen";
+    static String user = "root";
+    static String password = "";
+    static Connection con;
+    static Statement st;
+    static ResultSet rs;
+    
+    //Modelos
+    static DefaultComboBoxModel<String> modeloCombo;
+    DefaultListModel<String> modeloLista ;
 
     public Almacen() {
         initComponents();
+        setFrame();
     }
-    
-    private void setFrame(){
-        setTitle("Almacén");
-        setResizable(true);
-        setLocationRelativeTo(null);
-        
-        
-    }
-    
-    
 
+    private void setFrame() {
+        setTitle("Almacén");
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                
+                try {
+                    con = DriverManager.getConnection(url, user, password);
+                    JOptionPane.showMessageDialog(null, "BD conectada");
+                    itemCambiado();
+                } catch (SQLException ex) {
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "BD no conectada, vuelvelo a intentar, comprueba la URL");
+                }
+                
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    con.close();
+                    JOptionPane.showMessageDialog(null, "BD desconectada");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Almacen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
+
+    }
+    
+    private void itemCambiado(){
+        modeloCombo = new DefaultComboBoxModel<>();
+        modeloLista = new DefaultListModel<>();
+        comboTipoProducto.setModel(modeloCombo);
+        listadoProductos.setModel(modeloLista);
+        
+        modeloCombo.addElement("(Elige uno)");
+        String itemSeleccionado = String.valueOf(modeloCombo.getSelectedItem());
+        
+        if (itemSeleccionado.equalsIgnoreCase("(Elige uno)")){
+            modeloLista.clear();
+        } else{
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

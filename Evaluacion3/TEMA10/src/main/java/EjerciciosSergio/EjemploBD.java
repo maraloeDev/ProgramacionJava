@@ -1,7 +1,17 @@
 package EjerciciosSergio;
 
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,6 +38,17 @@ public class EjemploBD extends javax.swing.JFrame {
     static finca finca;
     static ArrayList<finca> listaFincas = new ArrayList<>();
 
+    //Archivo
+    static File archivo = new File(".\\src\\main\\java\\EjerciciosSergio\\exportaciones.csv");
+
+    //Escritura CSV
+    BufferedWriter bw;
+    CSVWriter csvW = null;
+
+    //LecturaCSV
+    BufferedReader br;
+    CsvToBean<finca> csvTB;
+
     public EjemploBD() {
         initComponents();
         setFrame();
@@ -38,13 +59,9 @@ public class EjemploBD extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         lasFincas.setEditable(false);
-        conexionBD();
-    }
 
-    void conexionBD() {
         addWindowListener(new WindowAdapter() {
             @Override
-
             //Cuando se abre la ventana, se "Intenta conectar a la base de datos"
             public void windowOpened(WindowEvent e) {
                 try {
@@ -78,8 +95,6 @@ public class EjemploBD extends javax.swing.JFrame {
             double area = Double.parseDouble(JOptionPane.showInputDialog(null, "Introduce un area: "));
             int propietario = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce id del propietario"));
 
-            conexionBD();
-
             String consulta = "INSERT INTO finca (id, direccion, area, propietarioID) VALUES (?,?,?,?)";
 
             PreparedStatement ps = con.prepareCall(consulta);
@@ -88,7 +103,7 @@ public class EjemploBD extends javax.swing.JFrame {
             ps.setDouble(3, area);
             ps.setInt(4, propietario);
 
-            int filasAfectadas = ps.executeUpdate();
+            ps.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Finca agregada correctamente");
 
@@ -99,7 +114,7 @@ public class EjemploBD extends javax.swing.JFrame {
     }
 
     void recorreFincas() {
-        
+
         StringBuilder textoFincas = new StringBuilder();
 
         listaFincas.clear();
@@ -124,7 +139,7 @@ public class EjemploBD extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         for (finca finca : listaFincas) {
             textoFincas.append(finca.toString()).append("\n");
 
@@ -167,16 +182,22 @@ public class EjemploBD extends javax.swing.JFrame {
 
         try {
             recorreFincas();
-            int idEliminar = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduce el id de la finca a eliminar"));
+            String idEliminar = JOptionPane.showInputDialog(null, "Introduce el id de la finca a eliminar");
 
-            String consulta = "DELETE FROM finca WHERE ID = ?";
+            if ((!"0".equals(idEliminar)) || (idEliminar != "10000")) {
+                JOptionPane.showMessageDialog(null, "ID incorrecto");
 
-            ps = con.prepareStatement(consulta);
-            ps.setInt(1, idEliminar);
+            } else {
 
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Finca eliminada");
-            ps.close();
+                String consulta = "DELETE FROM finca WHERE ID = ?";
+
+                ps = con.prepareStatement(consulta);
+                ps.setInt(1, Integer.parseInt(idEliminar));
+
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Finca eliminada");
+                ps.close();
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,6 +207,85 @@ public class EjemploBD extends javax.swing.JFrame {
 
     void verFincas() {
         recorreFincas();
+    }
+
+    void exportarFinca() {
+        escrituraCSV();
+        lecturaCSV();
+    }
+
+    void lecturaCSV() {
+        StringBuilder strB = new StringBuilder();
+        try {
+            if (!archivo.exists()) {
+                try {
+                    archivo.createNewFile();
+                    JOptionPane.showMessageDialog(null, "Archivo creado correctamente");
+                } catch (IOException ex) {
+                    Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            br = new BufferedReader(new FileReader(archivo));
+            csvTB = new CsvToBeanBuilder<finca>(br)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .withType(finca.class)
+                    .build();
+            for (finca lecturaFinca : csvTB.parse()) {
+
+                strB.append(Arrays.toString(lecturaFinca.toArray()));
+                strB.append("\n");
+                strB.append(lecturaFinca.toString());
+
+                lasFincas.setText(strB.toString());
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void escrituraCSV() {
+
+        try {
+
+            listaFincas.clear();
+
+            try {
+                String consulta = "SELECT id, direccion, area, propietarioId FROM finca";
+                st = con.createStatement();
+                rs = st.executeQuery(consulta);
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    String direccion = rs.getString(2);
+                    double area = rs.getDouble(3);
+                    int propietarioId = rs.getInt(4);
+
+                    finca = new finca(id, direccion, area, propietarioId);
+                    listaFincas.add(finca);
+                }
+                rs.close();
+                st.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            bw = new BufferedWriter(new FileWriter(archivo));
+            csvW = new CSVWriter(bw);
+
+            csvW.writeNext(finca.toArray(), false);
+
+            for (finca laFincaRecorre : listaFincas) {
+                bw.write(laFincaRecorre.toString());
+                bw.newLine();
+            }
+
+            csvW.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(EjemploBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -201,6 +301,7 @@ public class EjemploBD extends javax.swing.JFrame {
         actualizarFincas = new javax.swing.JButton();
         eliminarFincas = new javax.swing.JButton();
         verFincas = new javax.swing.JButton();
+        exportarCSV = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lasFincas = new javax.swing.JTextArea();
 
@@ -234,6 +335,13 @@ public class EjemploBD extends javax.swing.JFrame {
             }
         });
 
+        exportarCSV.setText("Exportar Finca");
+        exportarCSV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exportarCSVMouseClicked(evt);
+            }
+        });
+
         lasFincas.setColumns(20);
         lasFincas.setRows(5);
         lasFincas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
@@ -251,7 +359,8 @@ public class EjemploBD extends javax.swing.JFrame {
                     .addComponent(eliminarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(verFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(actualizarFincas)
-                    .addComponent(insetarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(insetarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exportarCSV))
                 .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
@@ -269,6 +378,8 @@ public class EjemploBD extends javax.swing.JFrame {
                 .addComponent(eliminarFincas)
                 .addGap(36, 36, 36)
                 .addComponent(verFincas)
+                .addGap(31, 31, 31)
+                .addComponent(exportarCSV)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -290,6 +401,10 @@ public class EjemploBD extends javax.swing.JFrame {
     private void verFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verFincasMouseClicked
         verFincas();
     }//GEN-LAST:event_verFincasMouseClicked
+
+    private void exportarCSVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exportarCSVMouseClicked
+        exportarFinca();
+    }//GEN-LAST:event_exportarCSVMouseClicked
 
     /**
      * @param args the command line arguments
@@ -323,11 +438,13 @@ public class EjemploBD extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new EjemploBD().setVisible(true);
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizarFincas;
     private javax.swing.JButton eliminarFincas;
+    private javax.swing.JButton exportarCSV;
     private javax.swing.JButton insetarFincas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea lasFincas;

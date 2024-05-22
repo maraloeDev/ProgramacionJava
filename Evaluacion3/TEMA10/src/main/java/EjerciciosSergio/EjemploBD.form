@@ -32,6 +32,7 @@
                   <Component id="verFincas" min="-2" pref="113" max="-2" attributes="0"/>
                   <Component id="actualizarFincas" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="insetarFincas" min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="exportarCSV" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
           </Group>
@@ -53,6 +54,8 @@
               <Component id="eliminarFincas" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Component id="verFincas" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Component id="exportarCSV" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -89,6 +92,14 @@
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="verFincasMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="exportarCSV">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exportar Finca"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exportarCSVMouseClicked"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

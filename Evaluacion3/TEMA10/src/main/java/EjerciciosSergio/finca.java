@@ -1,18 +1,26 @@
 package EjerciciosSergio;
 
+import com.opencsv.bean.CsvBindByName;
 
 public class finca {
-    
+
+    @CsvBindByName(column = "ID")
     int id;
+
+    @CsvBindByName(column = "DIRECCION")
     String direccion;
+
+    @CsvBindByName(column = "AREA")
     double area;
+
+    @CsvBindByName(column = "PROPIETARIOID")
     int propiestarioId;
 
     public finca() {
     }
 
     public finca(int id, String direccion, double area, int propiestarioId) {
-        this.id = id;  
+        this.id = id;
         this.direccion = direccion;
         this.area = area;
         this.propiestarioId = propiestarioId;
@@ -52,14 +60,12 @@ public class finca {
 
     @Override
     public String toString() {
-        return 
-                "Id=" + id +
-                "Direccion=" + direccion +
-                "Area=" + area +
-                "PropietarioId=" + propiestarioId;
+        return id + "," + direccion + "," + area + "," + propiestarioId;
     }
-    
-    
-    
-    
+
+    public String[] toArray() {
+        String[] datos = {"ID", "DIRECCION", "AREA", "PROPIETARIOID"};
+        return datos;
+    }
+
 }
